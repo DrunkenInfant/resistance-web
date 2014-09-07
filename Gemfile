@@ -37,6 +37,7 @@ group :development, :test do
 	gem 'rspec-rails'
 	gem 'json_spec'
 	gem 'factory_girl_rails'
+	gem 'database_cleaner','1.0.1'
 end
 
 # Use ActiveModel has_secure_password

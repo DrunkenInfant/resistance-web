@@ -39,4 +39,43 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  # To disable a warning about comming changes
+  config.treat_symbols_as_metadata_keys_with_true_values = true
+
+  #Json spec helpers
+  config.include JsonSpec::Helpers
+
+  JsonSpec.configure do
+    exclude_keys "id", "created_at", "updated_at"
+  end
+
+  # Database cleaner setup
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:all, :clean) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:all, :clean) do
+    DatabaseCleaner.clean
+  end
+
+  config.before(:each) do
+    unless example.metadata[:noclean]
+      DatabaseCleaner.start
+    end
+  end
+
+  config.after(:each) do
+    unless example.metadata[:noclean]
+      DatabaseCleaner.clean
+    end
+  end
 end
