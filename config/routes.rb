@@ -3,8 +3,24 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # get 'static#index'
   root to: 'static#index'
+
+  # The JSON API lies behind the api namesapce
+
+  devise_for :users,
+    controllers: {
+      sessions: 'users/sessions',
+      regitrations: 'users/registrations'
+    },
+    skip: [:sessions, :registrations]
+  devise_scope :users do
+    post "/users/sign_in", to: "users/sessions#create"
+    delete "/users/sign_out", to: "users/sessions#destroy"
+    get "/users/current", to: "users/sessions#current"
+    post "/users/sign_up", to: "users/registrations#create"
+    get "/users/:id", to: "users/registrations#show"
+  end
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
