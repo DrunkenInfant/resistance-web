@@ -10,6 +10,7 @@ describe Player do
     end
 
     it "validate game" do
+      game = FactoryGirl.build(:game)
       FactoryGirl.build(:player, game: game).should be_valid
       FactoryGirl.build(:player, game: nil).should_not be_valid
       FactoryGirl.build(:player, game_id: game.id+1).should_not be_valid
