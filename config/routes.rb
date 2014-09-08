@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     get "/users/:id", to: "users/registrations#show"
   end
 
-  resources :games, defaults: { format: :json }, only: [:create, :show]
+  resources :games, defaults: { format: :json }, only: [:create, :show, :index]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

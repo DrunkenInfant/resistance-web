@@ -62,4 +62,18 @@ describe GamesController do
       response.status.should be_eql(404)
     end
   end
+
+  describe "GET to GamesController" do
+    it "should return list of all games" do
+      15.times do |n|
+        game = FactoryGirl.build(:game)
+        game.players = @users.map do |u|
+          FactoryGirl.build(:player, game: game, user: u)
+        end
+        game.save!
+      end
+      get :index, format: :json
+      response.body.should be_json_eql({ games: Game.all }.to_json)
+    end
+  end
 end
