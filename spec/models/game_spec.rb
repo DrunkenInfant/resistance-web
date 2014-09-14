@@ -25,6 +25,5 @@ describe Game do
       game.players << FactoryGirl.build(:player, team: "", game: game)
       game.should_not be_valid
     end
-      
   end
 end

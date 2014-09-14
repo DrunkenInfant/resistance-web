@@ -5,6 +5,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.5'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+# user active model serializers
+gem 'active_model_serializers', '0.8.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -34,6 +36,7 @@ gem 'ember-source', '1.7.0'
 gem 'devise'
 
 group :development, :test do
+  gem 'minitest'
 	gem 'rspec-rails'
 	gem 'json_spec'
 	gem 'factory_girl_rails'

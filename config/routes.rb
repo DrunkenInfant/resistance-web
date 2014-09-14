@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       regitrations: 'users/registrations'
     },
     skip: [:sessions, :registrations]
-  devise_scope :users do
+  devise_scope :user do
     post "/users/sign_in", to: "users/sessions#create"
     delete "/users/sign_out", to: "users/sessions#destroy"
     get "/users/current", to: "users/sessions#current"

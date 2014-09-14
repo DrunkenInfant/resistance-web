@@ -14,7 +14,7 @@ describe GamesController do
     it "should create new game" do
       post :create, game: { user_ids: @users.map { |u| u.id } }, format: :json
       response.body.should have_json_path("game")
-      response.body.should have_json_path("game/players")
+      response.body.should have_json_path("game/player_ids")
       response.status.should be_eql(201)
       Game.find(parse_json(response.body)["game"]["id"])
     end
@@ -22,8 +22,6 @@ describe GamesController do
     it "should assign teams correctly" do
       7.times do |n|
         post :create, game: { user_ids: @users.map { |u| u.id } }, format: :json
-        response.body.should have_json_path("game/players")
-        response.status.should be_eql(201)
         game = Game.find(parse_json(response.body)["game"]["id"])
         (game.players.select{ |p| p.team == "spies" }).length.should be_eql((@users.length - 1)/2)
         (game.players.select{ |p| p.team == "resistance" }).length.should be_eql(@users.length/2 + 1)
@@ -48,7 +46,55 @@ describe GamesController do
       }
       game.save!
       get :show, id: game.id, format: :json
-      response.body.should be_json_eql(game.to_json)
+      expected_json = {
+        game: {
+          id: game.id,
+          player_ids: game.players.map { |p| p.id }
+        },
+        players: game.players.map { |p|
+          {
+            id: p.id,
+            game_id: p.game_id,
+            user_id: p.user_id,
+            team: ""
+          }
+        }
+      }.to_json
+      response.body.should be_json_eql(expected_json)
+    end
+
+    it "should return game with only current_user team" do
+      game = FactoryGirl.build(:game)
+      game.players = @users.map { |u|
+        FactoryGirl.build(:player, user: u, game: game)
+      }
+      game.save!
+      sign_in @users.first
+      get :show, id: game.id, format: :json
+      expected_json = {
+        game: {
+          id: game.id,
+          player_ids: game.players.map { |p| p.id }
+        },
+        players: game.players.map { |p|
+          if p.user_id == @users.first.id
+            {
+              id: p.id,
+              game_id: p.game_id,
+              user_id: p.user_id,
+              team: p.team
+            }
+          else
+            {
+              id: p.id,
+              game_id: p.game_id,
+              user_id: p.user_id,
+              team: ""
+            }
+          end
+        }
+      }.to_json
+      response.body.should be_json_eql(expected_json)
     end
 
     it "should return 404 if game not found" do
@@ -73,7 +119,13 @@ describe GamesController do
         game.save!
       end
       get :index, format: :json
-      response.body.should be_json_eql({ games: Game.all }.to_json)
+      expected_games_json = Game.all.map { |g|
+          {
+            id: g.id,
+            player_ids: g.players.map { |p| p.id }
+          }
+      }.to_json
+      response.body.should include_json(expected_games_json)
     end
   end
 end
