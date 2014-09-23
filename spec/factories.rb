@@ -25,6 +25,14 @@ let(:user) { FactoryGirl.create(:user) }
     association :game, factory: :game, strategy: :build
   end
 
+  factory :mission do
+    sequence(:id) { |n| n }
+    index 1
+    nbr_participants 2
+    nbr_fails_required 1
+    association :game
+  end
+
   factory :game do
     sequence(:id) { |n| n }
     players []

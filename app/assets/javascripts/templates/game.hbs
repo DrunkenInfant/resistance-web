@@ -1,11 +1,18 @@
 <div class="col-lg-10 col-lg-offset-1">
 <h1>Game: {{ model.id }}</h1>
 <ul>
-{{#each model.players}}
+{{#each model.players }}
   <li>
     id: {{ id }},
     user: {{ user_id }},
     team: {{ team }}
+  </li>
+{{/each}}
+</ul>
+<ul>
+{{#each model.missions }}
+  <li>
+    {{ nbr_participants }} ({{ nbr_fails_required }})
   </li>
 {{/each}}
 </ul>

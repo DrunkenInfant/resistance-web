@@ -16,10 +16,14 @@ class GamesController < ApplicationController
   end
 
   def create
-    members = team_assignments(game_params[:user_ids].length).shuffle
+    nbr_players = game_params[:user_ids].length
+    members = team_assignments(nbr_players).shuffle
     game = Game.create do |g|
       g.players = game_params[:user_ids].map { |uid|
         Player.new user_id: uid, game: g, team: members.pop
+      }
+      g.missions = mission_specs(nbr_players).map { |ms|
+        Mission.new nbr_participants: ms[:participants], nbr_fails_required: ms[:fails], game: g
       }
     end
     respond_with(game)
@@ -35,5 +39,15 @@ class GamesController < ApplicationController
       spies = Array.new(nbr_spies, "spies")
       resistance = Array.new(nbr_players - nbr_spies, "resistance")
       return spies + resistance
+    end
+
+    def mission_specs (nbr_players)
+      [
+        { participants: 2, fails: 1},
+        { participants: 3, fails: 1},
+        { participants: 2, fails: 1},
+        { participants: 3, fails: 1},
+        { participants: 3, fails: 1}
+      ]
     end
 end
