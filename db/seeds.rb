@@ -20,21 +20,21 @@ User.create!(email: 'test11@test.com', password: 'jagkan', password_confirmation
 
 Game.create!() do |g|
   g.players = User.limit(5).order('id asc').map { |u| Player.create(user: u, game: g, team: "spies")}
-  g.missions = [2,3,2,3,3].map { |n| Mission.create(nbr_participants: n, game: g) }
+  g.missions = [2,3,2,3,3].map.with_index { |n, i| Mission.create(nbr_participants: n, game: g, index: i) }
 end
 Game.create!() do |g|
   g.players = User.limit(6).offset(1).order('id asc').map { |u| Player.create(user: u, game: g, team: "spies")}
-  g.missions = [2,3,2,3,3].map { |n| Mission.create(nbr_participants: n, game: g) }
+  g.missions = [2,3,2,3,3].map.with_index { |n, i| Mission.create(nbr_participants: n, game: g, index: i) }
 end
 Game.create!() do |g|
   g.players = User.limit(7).offset(2).order('id asc').map { |u| Player.create(user: u, game: g, team: "spies")}
-  g.missions = [2,3,2,3,3].map { |n| Mission.create(nbr_participants: n, game: g) }
+  g.missions = [2,3,2,3,3].map.with_index { |n, i| Mission.create(nbr_participants: n, game: g, index: i) }
 end
 Game.create!() do |g|
   g.players = User.limit(5).offset(5).order('id asc').map { |u| Player.create(user: u, game: g, team: "spies")}
-  g.missions = [2,3,2,3,3].map { |n| Mission.create(nbr_participants: n, game: g) }
+  g.missions = [2,3,2,3,3].map.with_index { |n, i| Mission.create(nbr_participants: n, game: g, index: i) }
 end
 Game.create!() do |g|
   g.players = User.limit(11).order('id asc').map { |u| Player.create(user: u, game: g, team: "spies")}
-  g.missions = [2,3,2,3,3].map { |n| Mission.create(nbr_participants: n, game: g) }
+  g.missions = [2,3,2,3,3].map.with_index { |n, i| Mission.create(nbr_participants: n, game: g, index: i) }
 end

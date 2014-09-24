@@ -1,19 +1,30 @@
-<div class="col-lg-10 col-lg-offset-1">
-<h1>Game: {{ model.id }}</h1>
-<ul>
+<div class="row">
+<div class="col-lg-3">
+<ul class="player-list list-group">
+  <li class="list-group-item active">
+    Players
+  </li>
 {{#each model.players }}
-  <li>
+  <li class="list-group-item">
     id: {{ id }},
     user: {{ user_id }},
     team: {{ team }}
   </li>
 {{/each}}
 </ul>
-<ul>
+</div>
+<div class="col-lg-9">
+<h1 class="game-title">Game: {{ model.id }}</h1>
+<ul class="missions-list">
 {{#each model.missions }}
-  <li>
-    {{ nbr_participants }} ({{ nbr_fails_required }})
+  {{#if isCurrent }}
+  <li class="active" >
+  {{else}}
+    <li>
+  {{/if}}
+    <div>{{ nbr_participants }}</div>
   </li>
 {{/each}}
 </ul>
+</div>
 </div>

@@ -1,0 +1,36 @@
+.missions-list {
+  list-style-type: none;
+}
+
+.missions-list li {
+  display: block;
+  float: left;
+  margin-right: 50px;
+  height: 80px;
+  width: 80px;
+  border: 1px solid black;
+  border-radius: 40px;
+}
+
+.missions-list li.active {
+  border-color: green;
+}
+
+.missions-list li > div {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 1.8em;
+}
+
+.player-list {
+  list-style-type: none;
+  margin-left: 20px;
+}
+
+.game-title {
+  width: 100%;
+  margin:auto;
+  text-align: center;
+}
