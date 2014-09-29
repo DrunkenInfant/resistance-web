@@ -40,14 +40,7 @@ describe GamesController do
 
   describe "GET with :id to GamesController" do
     it "should return game" do
-      game = FactoryGirl.build(:game)
-      game.players = @users.map { |u|
-        FactoryGirl.build(:player, user: u, game: game)
-      }
-      game.missions = [2,3,3,2,3].map { |n|
-        FactoryGirl.build(:mission, nbr_participants: n, game: game)
-      }
-      game.save!
+      game = FactoryGirl.create(:game)
       get :show, id: game.id, format: :json
       expected_json = {
         game: {
@@ -78,12 +71,7 @@ describe GamesController do
 
     it "should return game with only current_user team" do
       game = FactoryGirl.build(:game)
-      game.players = @users.map { |u|
-        FactoryGirl.build(:player, user: u, game: game)
-      }
-      game.missions = [2,3,3,2,3].map { |n|
-        FactoryGirl.build(:mission, nbr_participants: n, game: game)
-      }
+      game.players << FactoryGirl.build(:player, user: @users.first, game: game)
       game.save!
       sign_in @users.first
       get :show, id: game.id, format: :json
@@ -109,14 +97,7 @@ describe GamesController do
 
     it "should return 404 if game not found" do
       game = FactoryGirl.build(:game)
-      game.players = @users.map { |u|
-        FactoryGirl.build(:player, user: u, game: game)
-      }
-      game.missions = [2,3,3,2,3].map { |n|
-        FactoryGirl.build(:mission, nbr_participants: n, game: game)
-      }
-      game.save!
-      get :show, id: game.id + 1, format: :json
+      get :show, id: game.id, format: :json
       response.body.should be_json_eql({}.to_json)
       response.status.should be_eql(404)
     end
