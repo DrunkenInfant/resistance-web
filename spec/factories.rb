@@ -34,8 +34,15 @@ let(:user) { FactoryGirl.create(:user) }
   end
 
   factory :game do
+    ignore do
+      missions_count 5
+      players_count 5
+    end
     sequence(:id) { |n| n }
-    players []
+    after(:build) do |game, evaluator|
+      game.players << build_list(:player, evaluator.players_count, game: game)
+      game.missions << build_list(:mission, evaluator.missions_count, game: game)
+    end
   end
 
 end
