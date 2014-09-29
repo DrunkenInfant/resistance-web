@@ -26,3 +26,23 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+=== TODO ===
+
+* Enable suggesting teams, all team members at the same time.
+  - First backend, POST /games/:id/missions/:id/suggest
+  - Frontend, click in user list to add user to suggestion, click again to remove.
+    Accept suggestion with button. Add an area above mission list to display
+    active content.
+
+* Let everyone vote on a suggestion.
+
+* Keep track of whos turn it is to suggest, the king
+
+* Only let the king suggest teams
+
+* If a suggestion passes, dont allow another suggestion for the same mission.
+
+* If a suggestion passes, let all participating players choose fail or success.
+
+
