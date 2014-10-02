@@ -52,3 +52,11 @@ Please feel free to use a different markup language if you do not plan to run
 * After three successfull or failed missions, end the game and display result
 
 * Let players make comments on and mark other players
+
+==== UI ====
+
+* collapse player list on small screens
+
+* Current activity area above game board area
+
+* Display current king with a crown symbol
