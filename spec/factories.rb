@@ -45,4 +45,9 @@ let(:user) { FactoryGirl.create(:user) }
     end
   end
 
+  factory :nomination do
+
+  end
+
+
 end

@@ -62,7 +62,8 @@ describe GamesController do
             index: m.index,
             game_id: m.game_id,
             nbr_participants: m.nbr_participants,
-            nbr_fails_required: m.nbr_fails_required
+            nbr_fails_required: m.nbr_fails_required,
+            nomination_ids: []
           }
         }
       }.to_json

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140914173603) do
+ActiveRecord::Schema.define(version: 20140929205255) do
 
   create_table "games", force: true do |t|
     t.datetime "created_at"
@@ -26,6 +26,19 @@ ActiveRecord::Schema.define(version: 20140914173603) do
   end
 
   add_index "missions", ["game_id"], name: "index_missions_on_game_id"
+
+  create_table "nominations", force: true do |t|
+    t.integer  "mission_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "nominations", ["mission_id"], name: "index_nominations_on_mission_id"
+
+  create_table "nominations_players", force: true do |t|
+    t.integer "nomination_id"
+    t.integer "player_id"
+  end
 
   create_table "players", force: true do |t|
     t.integer "user_id"

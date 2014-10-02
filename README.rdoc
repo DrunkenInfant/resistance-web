@@ -30,7 +30,7 @@ Please feel free to use a different markup language if you do not plan to run
 === TODO ===
 
 * Enable suggesting teams, all team members at the same time.
-  - First backend, POST /games/:id/missions/:id/suggest
+  - DONE: First backend, POST /games/:id/missions/:id/suggest
   - Frontend, click in user list to add user to suggestion, click again to remove.
     Accept suggestion with button. Add an area above mission list to display
     active content.
@@ -45,4 +45,10 @@ Please feel free to use a different markup language if you do not plan to run
 
 * If a suggestion passes, let all participating players choose fail or success.
 
+* Advance king role after vote
 
+* Advance game to next mission on completed mission.
+
+* After three successfull or failed missions, end the game and display result
+
+* Let players make comments on and mark other players

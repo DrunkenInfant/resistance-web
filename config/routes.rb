@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   resources :games, defaults: { format: :json }, only: [:create, :show, :index] do
     resources :missions, defaults: { format: :json }, only: [] do
-      resources :suggestions, defaults: { format: :json }, only: [:create]
+      resources :nominations, defaults: { format: :json }, only: [:create, :show]
     end
   end
 
