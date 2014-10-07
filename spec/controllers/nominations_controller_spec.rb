@@ -15,4 +15,22 @@ describe NominationsController do
       nom.players.to_a.should eql(game.players[0, 2])
     end
   end
+
+  describe "GET to NominationsController with :id" do
+    it "should return Nomination with id" do
+      game = FactoryGirl.create(:game)
+      nomination = FactoryGirl.create(:nomination,
+          mission: game.missions.first,
+          players: game.players[0,3])
+      get :show, id: nomination.id, format: :json
+      expected_json = {
+        nomination: {
+          id: nomination.id,
+          mission_id: nomination.mission_id,
+          player_ids: game.players[0, 3].map { |p| p.id }
+        }
+      }.to_json
+      response.body.should be_json_eql(expected_json)
+    end
+  end
 end

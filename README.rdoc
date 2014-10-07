@@ -31,17 +31,24 @@ Please feel free to use a different markup language if you do not plan to run
 
 * Enable suggesting teams, all team members at the same time.
   - DONE: First backend, POST /games/:id/missions/:id/suggest
-  - Frontend, click in user list to add user to suggestion, click again to remove.
+  - DONE: Frontend, click in user list to add user to suggestion, click again to remove.
     Accept suggestion with button. Add an area above mission list to display
     active content.
+  - DONE: Frontend, update game after new nomination
 
 * Let everyone vote on a suggestion.
+  - Backend, accept vote from one player at a time
+  - Backend, only accept one vote per player
+  - Backend, let client request voting results
+  - Backend, only accept nomination if all other nominations in this mission have been voted on.
 
 * Keep track of whos turn it is to suggest, the king
 
 * Only let the king suggest teams
 
 * If a suggestion passes, dont allow another suggestion for the same mission.
+
+* Automagically pass the fifth nomination
 
 * If a suggestion passes, let all participating players choose fail or success.
 

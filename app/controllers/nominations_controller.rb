@@ -4,7 +4,12 @@ class NominationsController < ApplicationController
 
   def create
     nomination = Nomination.create(nomination_params)
-    respond_with(nomination.mission.game, nomination.mission, nomination)
+    respond_with(nomination)
+  end
+
+  def show
+    nomination = Nomination.find(params[:id])
+    respond_with(nomination)
   end
 
   private

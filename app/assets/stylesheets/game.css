@@ -34,3 +34,55 @@
   margin:auto;
   text-align: center;
 }
+
+.game-active-area {
+	clear: both;
+}
+
+.game-active-header {
+	font-size: 1.4em;
+	width: 100%;
+	text-align: center;
+}
+
+.nominations-list {
+  clear: both;
+}
+
+.nominations-list ul {
+  list-style: none;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nominations-list ul li {
+  position: relative;
+  display: block;
+  float: left;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  padding: 5px;
+  height: 80px;
+  width: 80px;
+  background-color: #b3c833;
+  color: #fff;
+}
+
+.nominations-list ul li.active {
+  background-color: #428bca;
+}
+
+.nominations-list ul li > div {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 1.8em;
+}
+
+.nomination-submit {
+	clear: both;
+	width: 100%;
+	text-align: center;
+}

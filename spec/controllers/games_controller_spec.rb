@@ -65,7 +65,8 @@ describe GamesController do
             nbr_fails_required: m.nbr_fails_required,
             nomination_ids: []
           }
-        }
+        },
+        nominations: []
       }.to_json
       response.body.should be_json_eql(expected_json)
     end
