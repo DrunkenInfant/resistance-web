@@ -7,7 +7,7 @@ describe NominationsController do
       nomination = FactoryGirl.attributes_for(:nomination,
         mission_id: game.missions.first.id,
         player_ids: game.players[0, 2].map { |p| p.id })
-      post :create, game_id: game.id, mission_id: game.missions.first.id,
+      post :create,
         nomination: nomination,
         format: :json
       response.status.should be_eql(201)

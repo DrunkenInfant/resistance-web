@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :games, defaults: { format: :json }, only: [:create, :show, :index]
   resources :nominations, defaults: { format: :json }, only: [:create, :show]
+  resources :votes, defaults: { format: :json }, only: [:create]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
