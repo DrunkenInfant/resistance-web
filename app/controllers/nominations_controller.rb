@@ -3,7 +3,9 @@ class NominationsController < ApplicationController
   respond_to :json
 
   def create
-    nomination = Nomination.create(nomination_params)
+    mission = Mission.find(nomination_params[:mission_id])
+    nomination = mission.nominations.build(nomination_params)
+    nomination.save
     respond_with(nomination)
   end
 

@@ -40,12 +40,10 @@ Please feel free to use a different markup language if you do not plan to run
   - DONE: Backend, only accept one vote per player
   - Backend, let client request voting results
   - Backend, whithhold voting details until all votes are in
-  - Backend, only accept nomination if all other nominations in this mission have been voted on.
+  - DONE: Backend, only accept nomination if all other nominations in this mission have been voted on.
   - DONE: Frontend, display vote view on nomination created
   - DONE: Frontend, let player vote
-
-* Only let one nomination to be created at a time (BACKEND)
-  - ...
+  - DONE: Backend, Only let one nomination to be created at a time
 
 * Keep track of whos turn it is to suggest, the king
 

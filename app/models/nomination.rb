@@ -2,6 +2,7 @@ class Nomination < ActiveRecord::Base
   has_and_belongs_to_many :players
   belongs_to :mission
   has_many :votes
+  validates_associated :mission
   validate :one_vote_per_player
 
   def one_vote_per_player
