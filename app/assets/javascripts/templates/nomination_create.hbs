@@ -1,8 +1,11 @@
 <div class=nomination-area">
+	<div class="game-active-header">
+		Select players to nominate
+	</div>
 	<div class="nominations-list">
 	<ul>
-	{{#each model.players}}
-	  <li {{bind-attr class="selected:active"}} {{action "select" this}}>
+	{{#each model.mission.game.players}}
+	  <li {{bind-attr class="nominated:active"}} {{action "select" this}}>
 		user: {{ user_id }}
 	  </li>
 	{{/each}}

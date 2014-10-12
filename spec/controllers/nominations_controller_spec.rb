@@ -27,8 +27,9 @@ describe NominationsController do
         nomination: {
           id: nomination.id,
           mission_id: nomination.mission_id,
-          player_ids: game.players[0, 3].map { |p| p.id }
-        }
+          player_ids: game.players[0, 3].map { |p| p.id },
+          vote_ids: []
+        },
       }.to_json
       response.body.should be_json_eql(expected_json)
     end

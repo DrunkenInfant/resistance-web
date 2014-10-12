@@ -17,12 +17,15 @@
 <h1 class="game-title">Game: {{ model.id }}</h1>
 
 <div class="game-active-area">
-	<div class="game-active-header">
-		Select players to nominate
-	</div>
-	{{render "nomination_create" model}}
-	<div style="width: 100%; clear: both;">
-	</div>
+  {{#if model.stateIsNominate }}
+	{{render "nomination_create"
+		model.currentMission.newNomination }}
+  {{/if}}
+  {{#if model.stateIsVote }}
+	{{render "nomination_view" model.currentMission.currentNomination }}
+  {{/if}}
+  <div style="width: 100%; clear: both;">
+  </div>
 </div>
 
 <div class="missions-area">
