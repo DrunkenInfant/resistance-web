@@ -48,6 +48,9 @@ let(:user) { FactoryGirl.create(:user) }
 
   factory :nomination do
     association :mission
+    after(:build) do |nom|
+      nom.players = nom.mission.game.players[0, nom.mission.nbr_participants]
+    end
   end
 
   factory :vote do

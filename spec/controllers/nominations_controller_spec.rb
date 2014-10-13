@@ -12,7 +12,10 @@ describe NominationsController do
     it "should create nomination" do
       nomination = FactoryGirl.attributes_for(:nomination,
         mission_id: @game.missions.first.id,
-        player_ids: @game.players[0, 2].map { |p| p.id })
+        player_ids:
+          @game.players[0, @game.missions.first.nbr_participants].map { |p|
+            p.id
+          })
       post :create,
         nomination: nomination,
         format: :json
@@ -23,8 +26,7 @@ describe NominationsController do
 
     it "should not create nomination if one is not voted on" do
       nom1 = FactoryGirl.create(:nomination,
-          mission: @game.missions.first,
-          players: @game.players[0,3])
+          mission: @game.missions.first)
       nom_attr = FactoryGirl.attributes_for(:nomination,
         mission_id: @game.missions.first.id,
         player_ids: @game.players[0, 2].map { |p| p.id })
@@ -45,20 +47,18 @@ describe NominationsController do
     it "should not create a sixth nomination" do
       5.times {
         nom = FactoryGirl.create(:nomination,
-            mission: @game.missions.first,
-            players: @game.players[0,3])
+            mission: @game.missions.first)
         @game.players.each { |p|
           FactoryGirl.create(:vote, nomination: nom, player: p)
         }
       }
       nom_attr = FactoryGirl.attributes_for(:nomination,
-        mission_id: @game.missions.first.id,
-        player_ids: @game.players[0, 2].map { |p| p.id })
+        mission_id: @game.missions.first.id)
       post :create,
         nomination: nom_attr,
         format: :json
       response.status.should be_eql(422)
-      response.body.should have_json_path("errors")
+      response.body.should have_json_path("errors/mission")
     end
 
     it "should not create nomination if not signed in" do
@@ -82,14 +82,13 @@ describe NominationsController do
         nomination: nomination,
         format: :json
       response.status.should be_eql(422)
-      response.body.should have_json_path("errors")
+      response.body.should have_json_path("errors/nomination")
     end
 
     it "should proxy vote accept for all users on fifth nomination" do
       4.times do
         nom = FactoryGirl.create(:nomination,
-          mission_id: @game.missions.first.id,
-          player_ids: @game.players[0, 2].map { |p| p.id })
+          mission_id: @game.missions.first.id)
         @game.players.each { |p|
           FactoryGirl.create(:vote,
             nomination: nom,
@@ -99,7 +98,9 @@ describe NominationsController do
       end
       nomination = FactoryGirl.attributes_for(:nomination,
         mission_id: @game.missions.first.id,
-        player_ids: @game.players[0, 2].map { |p| p.id })
+        player_ids: @game
+          .players[0, @game.missions.first.nbr_participants]
+          .map { |p| p.id })
       post :create,
         nomination: nomination,
         format: :json
@@ -112,19 +113,44 @@ describe NominationsController do
         v.pass.should be_true
       }
     end
+
+    it "should only allow correct number of nominated players" do
+      nomination = FactoryGirl.attributes_for(:nomination,
+        mission_id: @game.missions.first.id,
+        player_ids: [])
+      @game.players.each do |p|
+        if nomination[:player_ids].length != @game.missions.first.nbr_participants
+          post :create,
+            nomination: nomination,
+            format: :json
+          response.status.should eql(422)
+          response.body.should have_json_path("errors/players")
+        end
+        nomination[:player_ids] << p.id
+      end
+      nomination[:player_ids] = @game
+        .players[0, @game.missions.first.nbr_participants]
+        .map { |p| p.id }
+      post :create,
+        nomination: nomination,
+        format: :json
+      response.status.should eql(201)
+      Nomination.find(parse_json(response.body)["nomination"]["id"])
+    end
   end
 
   describe "GET to NominationsController with :id" do
     it "should return Nomination with id" do
       nomination = FactoryGirl.create(:nomination,
-          mission: @game.missions.first,
-          players: @game.players[0,3])
+          mission: @game.missions.first)
       get :show, id: nomination.id, format: :json
       expected_json = {
         nomination: {
           id: nomination.id,
           mission_id: nomination.mission_id,
-          player_ids: @game.players[0, 3].map { |p| p.id }
+          player_ids: @game
+            .players[0, @game.missions.first.nbr_participants]
+            .map { |p| p.id }
         },
       }
       response.body.should be_json_eql(expected_json.to_json)
@@ -132,14 +158,15 @@ describe NominationsController do
 
     it "should withhold votes unless vote is completed" do
       nomination = FactoryGirl.create(:nomination,
-          mission: @game.missions.first,
-          players: @game.players[0,3])
+          mission: @game.missions.first)
       get :show, id: nomination.id, format: :json
       expected_json = {
         nomination: {
           id: nomination.id,
           mission_id: nomination.mission_id,
-          player_ids: @game.players[0, 3].map { |p| p.id }
+          player_ids: @game
+            .players[0, @game.missions.first.nbr_participants]
+            .map { |p| p.id }
         },
       }
       response.body.should be_json_eql(expected_json.to_json)
