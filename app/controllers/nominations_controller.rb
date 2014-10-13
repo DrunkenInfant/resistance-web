@@ -9,6 +9,11 @@ class NominationsController < ApplicationController
     if current_user == mission.game.king.user
       nomination = mission.nominations.build(nomination_params)
       nomination.save
+      if mission.nominations.length == 5
+        mission.game.players.each { |p|
+          nomination.votes.create(player: p, pass: true)
+        }
+      end
       respond_with(nomination)
     else
       render json: { errors: { nomination: ["Only the king may nominate"] } },

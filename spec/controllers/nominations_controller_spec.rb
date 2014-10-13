@@ -84,6 +84,34 @@ describe NominationsController do
       response.status.should be_eql(422)
       response.body.should have_json_path("errors")
     end
+
+    it "should proxy vote accept for all users on fifth nomination" do
+      4.times do
+        nom = FactoryGirl.create(:nomination,
+          mission_id: @game.missions.first.id,
+          player_ids: @game.players[0, 2].map { |p| p.id })
+        @game.players.each { |p|
+          FactoryGirl.create(:vote,
+            nomination: nom,
+            player: p,
+            pass: false)
+        }
+      end
+      nomination = FactoryGirl.attributes_for(:nomination,
+        mission_id: @game.missions.first.id,
+        player_ids: @game.players[0, 2].map { |p| p.id })
+      post :create,
+        nomination: nomination,
+        format: :json
+      response.status.should be_eql(201)
+      nom = Nomination.find(parse_json(response.body)["nomination"]["id"])
+      nom.votes.length.should eql(@game.players.length)
+      (nom.votes.map { |v| v.player.id }).should be_eql(
+        @game.players.map { |p| p.id })
+      nom.votes.each { |v|
+        v.pass.should be_true
+      }
+    end
   end
 
   describe "GET to NominationsController with :id" do
