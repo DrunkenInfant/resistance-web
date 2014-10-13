@@ -36,6 +36,14 @@ describe GamesController do
       response.status.should be_eql(422)
     end
 
+    it "should assign king" do
+      post :create, game: { user_ids: @users.map { |u| u.id } }, format: :json
+      response.status.should be_eql(201)
+      game = Game.find(parse_json(response.body)["game"]["id"])
+      parse_json(response.body)["game"]["king_id"]
+        .should eql(game.players.first.id)
+    end
+
   end
 
   describe "GET with :id to GamesController" do
@@ -46,7 +54,8 @@ describe GamesController do
         game: {
           id: game.id,
           player_ids: game.players.map { |p| p.id },
-          mission_ids: game.missions.map { |m| m.id }
+          mission_ids: game.missions.map { |m| m.id },
+          king_id: game.players.first.id
         },
         players: game.players.map { |p|
           {

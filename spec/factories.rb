@@ -42,6 +42,7 @@ let(:user) { FactoryGirl.create(:user) }
     after(:build) do |game, evaluator|
       game.players << build_list(:player, evaluator.players_count, game: game)
       game.missions << build_list(:mission, evaluator.missions_count, game: game)
+      game.king = game.players.first
     end
   end
 

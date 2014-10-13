@@ -25,6 +25,7 @@ class GamesController < ApplicationController
       g.missions = mission_specs(nbr_players).map { |ms|
         Mission.new nbr_participants: ms[:participants], nbr_fails_required: ms[:fails], game: g
       }
+      g.king = g.players.first
     end
     respond_with(game)
   end

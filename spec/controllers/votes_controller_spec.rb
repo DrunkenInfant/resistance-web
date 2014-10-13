@@ -59,5 +59,21 @@ describe VotesController do
       @nomination.reload
       @nomination.votes.length.should be_eql(1)
     end
+
+    it "should advance king on last vote" do
+      @game.players[1..-1].each { |p|
+        FactoryGirl.create(:vote,
+          nomination: @nomination,
+          player: p,
+          pass: true)
+      }
+      @nomination.reload
+      @game.king.should be_eql(@game.players.first)
+      sign_in @game.players.first.user
+      post :create, vote: { nomination_id: @nomination.id, pass: true },
+        format: :json
+      @game.reload
+      @game.king.should be_eql(@game.players[1])
+    end
   end
 end

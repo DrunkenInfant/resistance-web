@@ -46,16 +46,19 @@ Please feel free to use a different markup language if you do not plan to run
   - DONE: Backend, Only let one nomination to be created at a time
 
 * Keep track of whos turn it is to suggest, the king
+  - DONE
 
 * Only let the king suggest teams
 
 * If a suggestion passes, dont allow another suggestion for the same mission.
+  - DONE
 
 * Automagically pass the fifth nomination
 
 * If a suggestion passes, let all participating players choose fail or success.
 
 * Advance king role after vote
+  - DONE
 
 * Advance game to next mission on completed mission.
 
