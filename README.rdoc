@@ -59,6 +59,9 @@ Please feel free to use a different markup language if you do not plan to run
   - DONE
 
 * If a suggestion passes, let all participating players choose fail or success.
+  - Backend: Let nominated players choose result
+  - Backend: Only allow one result per nominated player
+  - Backend: Never leak the user of a result
 
 * Advance king role after vote
   - DONE
