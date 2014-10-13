@@ -69,11 +69,37 @@ describe NominationsController do
         nomination: {
           id: nomination.id,
           mission_id: nomination.mission_id,
-          player_ids: game.players[0, 3].map { |p| p.id },
-          vote_ids: []
+          player_ids: game.players[0, 3].map { |p| p.id }
         },
-      }.to_json
-      response.body.should be_json_eql(expected_json)
+      }
+      response.body.should be_json_eql(expected_json.to_json)
+    end
+
+    it "should withhold votes unless vote is completed" do
+      game = FactoryGirl.create(:game)
+      nomination = FactoryGirl.create(:nomination,
+          mission: game.missions.first,
+          players: game.players[0,3])
+      get :show, id: nomination.id, format: :json
+      expected_json = {
+        nomination: {
+          id: nomination.id,
+          mission_id: nomination.mission_id,
+          player_ids: game.players[0, 3].map { |p| p.id }
+        },
+      }
+      response.body.should be_json_eql(expected_json.to_json)
+      game.players.each { |p|
+        FactoryGirl.create(:vote, nomination: nomination, player: p)
+        nomination.reload
+        if nomination.votes.length == game.players.length
+          expected_json[:nomination][:vote_ids] = nomination.votes.map { |v|
+            v.id
+          }
+        end
+        get :show, id: nomination.id, format: :json
+        response.body.should be_json_eql(expected_json.to_json)
+      }
     end
   end
 end

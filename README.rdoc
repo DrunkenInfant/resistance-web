@@ -40,7 +40,7 @@ Please feel free to use a different markup language if you do not plan to run
 * Let everyone vote on a suggestion.
   - DONE: Backend, only accept one vote per player
   - Backend, let client request voting results
-  - Backend, whithhold voting details until all votes are in
+  - DONE: Backend, whithhold voting details until all votes are in
   - DONE: Backend, only accept nomination if all other nominations in this mission have been voted on.
   - DONE: Frontend, display vote view on nomination created
   - DONE: Frontend, let player vote
