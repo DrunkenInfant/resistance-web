@@ -1,12 +1,19 @@
 class NominationsController < ApplicationController
 
+  before_action :authenticate_user!
+
   respond_to :json
 
   def create
     mission = Mission.find(nomination_params[:mission_id])
-    nomination = mission.nominations.build(nomination_params)
-    nomination.save
-    respond_with(nomination)
+    if current_user == mission.game.king.user
+      nomination = mission.nominations.build(nomination_params)
+      nomination.save
+      respond_with(nomination)
+    else
+      render json: { errors: { nomination: ["Only the king may nominate"] } },
+        status: 422
+    end
   end
 
   def show
