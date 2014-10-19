@@ -54,5 +54,10 @@ let(:user) { FactoryGirl.create(:user) }
   end
 
   factory :vote do
+    pass true
+  end
+
+  factory :mission_result do
+    success true
   end
 end

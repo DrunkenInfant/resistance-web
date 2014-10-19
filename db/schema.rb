@@ -11,13 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141012183916) do
+ActiveRecord::Schema.define(version: 20141018130950) do
 
   create_table "games", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "king_id"
   end
+
+  create_table "mission_results", force: true do |t|
+    t.integer  "mission_id"
+    t.integer  "player_id"
+    t.boolean  "success"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mission_results", ["mission_id"], name: "index_mission_results_on_mission_id"
 
   create_table "missions", force: true do |t|
     t.integer "game_id"

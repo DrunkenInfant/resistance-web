@@ -18,4 +18,10 @@ class Nomination < ActiveRecord::Base
         "Incorrect number of nominated players, should be #{players}.")
     end
   end
+
+  def passed?
+    votes.length == mission.game.players.length and (votes.select { |v|
+        v.pass
+      }).length > mission.game.players.length / 2
+  end
 end
