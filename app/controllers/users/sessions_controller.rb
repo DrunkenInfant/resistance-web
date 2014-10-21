@@ -1,24 +1,28 @@
 class Users::SessionsController < Devise::SessionsController
 
   respond_to :json
-  # POST /users/sign_in
+
+  # POST /sessions
 	def create
     self.resource = warden.authenticate!(auth_options)
     sign_in(resource_name, resource)
-    return render json: {}, status: :no_content
+    return render json: {}, status: :created
 	end 
 
-  # GET /users/current
+  # GET /sessions/current
   def current
     if current_user
-      render json: {user: {id: 'current', email: current_user.email}}
+      render json: {
+        session: { id: 'current', user_id: current_user.id, csrfToken: form_authenticity_token }
+      }, status: :ok
     else
-      render json: {}, status: 404
+      render json: {
+        session: { id: 'current', csrfToken: form_authenticity_token }
+      }, status: :ok
     end
-
   end
 
-  # DELETE /users/sign_out
+  # DELETE /sessions/current
   def destroy
     if Devise.sign_out_all_scopes
       sign_out

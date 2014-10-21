@@ -1,4 +1,3 @@
-var get = Ember.get;
 Resistance.NominationSerializer = DS.RESTSerializer.extend({
   keyForRelationship: function (key, relationship) {
     if ( relationship == 'hasMany' ) {

@@ -6,9 +6,8 @@
   </li>
 {{#each model.players }}
   <li class="list-group-item">
-    id: {{ id }},
-    user: {{ user_id }},
-    team: {{ team }}
+    user: {{ user_id }}
+    <a href="#" {{action 'dev_login' user_id}}>Log In</a>
   </li>
 {{/each}}
 </ul>
