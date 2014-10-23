@@ -177,6 +177,14 @@ describe NominationsController do
           expected_json[:nomination][:vote_ids] = nomination.votes.map { |v|
             v.id
           }
+          expected_json[:votes] = nomination.votes.map { |v|
+            {
+              id: v.id,
+              nomination_id: nomination.id,
+              pass: v.pass,
+              player_id: v.player.id
+            }
+          }
         end
         get :show, id: nomination.id, format: :json
         response.body.should be_json_eql(expected_json.to_json)
