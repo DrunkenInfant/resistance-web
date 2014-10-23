@@ -10,7 +10,7 @@ describe Users::SessionsController do
       subject.current_user.should be_nil
       post :create, user: {email: user.email, password: "jagkan"}, format: :json
       response.body.should be_json_eql({}.to_json)
-      response.status.should eql(204)
+      response.status.should eql(201)
       subject.current_user.should_not be_nil
     end
   end
@@ -34,8 +34,14 @@ describe Users::SessionsController do
       sign_in user
       subject.current_user.should_not be_nil
       get :current
-      JsonSpec.excluded_keys = []
-      response.body.should be_json_eql({user: {id: 'current', email: user.email}}.to_json)
+      JsonSpec.excluded_keys = [:csrfToken]
+      response.body.should be_json_eql({
+        session: {
+          id: "current",
+          user_id: user.id
+        }
+      }.to_json)
+      response.body.should have_json_path("session/csrfToken")
     end
 
     it "should return nil user" do
@@ -43,8 +49,8 @@ describe Users::SessionsController do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       subject.current_user.should be_nil
       get :current
-      response.body.should be_json_eql({}.to_json)
-      response.status.should eql(404)
+      response.body.should have_json_path("session/csrfToken")
+      response.status.should eql(200)
     end
   end
 
