@@ -19,8 +19,12 @@ class Nomination < ActiveRecord::Base
     end
   end
 
+  def vote_complete?
+    votes.length == mission.game.players.length
+  end
+
   def passed?
-    votes.length == mission.game.players.length and (votes.select { |v|
+    vote_complete? and (votes.select { |v|
         v.pass
       }).length > mission.game.players.length / 2
   end

@@ -150,8 +150,10 @@ describe NominationsController do
           mission_id: nomination.mission_id,
           player_ids: @game
             .players[0, @game.missions.first.nbr_participants]
-            .map { |p| p.id }
+            .map { |p| p.id },
+          vote_ids: []
         },
+        votes: []
       }
       response.body.should be_json_eql(expected_json.to_json)
     end
@@ -166,17 +168,19 @@ describe NominationsController do
           mission_id: nomination.mission_id,
           player_ids: @game
             .players[0, @game.missions.first.nbr_participants]
-            .map { |p| p.id }
+            .map { |p| p.id },
+          vote_ids: []
         },
+        votes: []
       }
       response.body.should be_json_eql(expected_json.to_json)
       @game.players.each { |p|
         FactoryGirl.create(:vote, nomination: nomination, player: p)
         nomination.reload
+        expected_json[:nomination][:vote_ids] = nomination.votes.map { |v|
+          v.id
+        }
         if nomination.votes.length == @game.players.length
-          expected_json[:nomination][:vote_ids] = nomination.votes.map { |v|
-            v.id
-          }
           expected_json[:votes] = nomination.votes.map { |v|
             {
               id: v.id,
@@ -184,6 +188,23 @@ describe NominationsController do
               pass: v.pass,
               player_id: v.player.id
             }
+          }
+        else
+          expected_json[:votes] = nomination.votes.map { |v|
+            if v.player.user.id == @user.id
+              {
+                id: v.id,
+                nomination_id: nomination.id,
+                pass: v.pass,
+                player_id: v.player.id
+              }
+            else
+              {
+                id: v.id,
+                nomination_id: nomination.id,
+                player_id: v.player.id
+              }
+            end
           }
         end
         get :show, id: nomination.id, format: :json
