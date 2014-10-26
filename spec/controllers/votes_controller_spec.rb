@@ -55,7 +55,7 @@ describe VotesController do
       post :create, vote: { nomination_id: @nomination.id, pass: true },
         format: :json
       response.status.should be_eql(422)
-      response.body.should have_json_path("errors/votes")
+      response.body.should have_json_path("errors/player")
       @nomination.reload
       @nomination.votes.length.should be_eql(1)
     end

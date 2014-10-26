@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   resources :games, defaults: { format: :json }, only: [:create, :show, :index]
   resources :nominations, defaults: { format: :json }, only: [:create, :show]
-  resources :votes, defaults: { format: :json }, only: [:create]
+  resources :votes, defaults: { format: :json }, only: [:create, :show]
   resources :mission_results, defaults: { format: :json }, only: [:create, :show]
 
   # Example of regular route:

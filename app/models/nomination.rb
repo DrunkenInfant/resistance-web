@@ -9,6 +9,7 @@ class Nomination < ActiveRecord::Base
     uniq_votes = votes.to_a.uniq { |v| v.player.id }
     if uniq_votes.length != votes.length and errors[:votes].empty?
       errors.add(:votes, "Only one vote per player")
+      votes.last.errors.add(:player, "Only one vote per player")
     end
   end
 

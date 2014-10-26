@@ -12,7 +12,7 @@ class VotesController < ApplicationController
       nomination.mission.game.advance_king!
       nomination.mission.game.save
     end
-    respond_with(nomination)
+    respond_with(vote)
   end
 
   private
