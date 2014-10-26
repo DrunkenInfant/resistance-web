@@ -11,8 +11,12 @@
 	{{/each}}
 	</ul>
 	</div>
-	<div class="nomination-accept">
-		<button {{action "accept"}} class="btn btn-primary">Accept</button>
-		<button {{action "reject"}} class="btn btn-primary">Reject</button>
-	</div>
+    {{#if currentPlayer.hasVoted }}
+      <span {{bind-attr class="currentPlayer.vote.pass:vote-accepted:vote-rejected"}}></span>
+    {{else}}
+      <div class="nomination-accept">
+        <button {{action "accept"}} class="btn btn-primary">Accept</button>
+        <button {{action "reject"}} class="btn btn-primary">Reject</button>
+      </div>
+    {{/if}}
 </div>

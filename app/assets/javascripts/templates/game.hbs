@@ -6,8 +6,11 @@
   </li>
 {{#each model.players }}
   <li class="list-group-item">
-    user: {{ user_id }}
-    <a href="#" {{action 'dev_login' user_id}}>Log In</a>
+    user: {{ user.id }}
+  	{{#if isKing }}
+      <span class="glyphicon glyphicon-star"></span>
+    {{/if}}
+    <a href="#" {{action 'dev_login' user.id}}>Log In</a>
   </li>
 {{/each}}
 </ul>
@@ -17,11 +20,15 @@
 
 <div class="game-active-area">
   {{#if model.stateIsNominate }}
-	{{render "nomination_create"
-		model.currentMission.newNomination }}
+    {{#if currentPlayer.isKing }}
+		{{render "nomination_create"
+			model.currentMission.newNomination }}
+    {{else}}
+	  Waiting for nomination...
+    {{/if}}
   {{/if}}
   {{#if model.stateIsVote }}
-	{{render "nomination_view" model.currentMission.currentNomination }}
+      {{render "nomination_view" model.currentMission.currentNomination }}
   {{/if}}
   <div style="width: 100%; clear: both;">
   </div>

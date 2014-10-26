@@ -24,7 +24,7 @@ Resistance.Mission = DS.Model.extend({
       lastNom = noms.objectAt(noms.get('length') - 1);
     }
     return lastNom;
-  }.property('nominations'),
+  }.property('nominations.@each.isNew'),
 
   state: function () {
     var curNom = this.get('currentNomination');

@@ -86,3 +86,14 @@
 	width: 100%;
 	text-align: center;
 }
+
+.vote-accepted, .vote-rejected {
+}
+
+.vote-accepted:before {
+  content: "You accepted!";
+}
+
+.vote-rejected:before {
+  content: "You rejected!";
+}

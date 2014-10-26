@@ -1,6 +1,7 @@
 Resistance.Game = DS.Model.extend({
   players: DS.hasMany('player'),
   missions: DS.hasMany('mission'),
+  king: DS.belongsTo('player'),
 
   currentMission: function() {
     return this.get('missions').objectAt(0);
