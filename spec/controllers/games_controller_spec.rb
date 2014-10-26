@@ -72,9 +72,11 @@ describe GamesController do
             game_id: m.game_id,
             nbr_participants: m.nbr_participants,
             nbr_fails_required: m.nbr_fails_required,
+            mission_result_ids: [],
             nomination_ids: []
           }
         },
+        mission_results: [],
         nominations: []
       }.to_json
       response.body.should be_json_eql(expected_json)
