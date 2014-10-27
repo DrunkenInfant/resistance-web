@@ -22,13 +22,16 @@
   {{#if model.stateIsNominate }}
     {{#if currentPlayer.isKing }}
 		{{render "nomination_create"
-			model.currentMission.newNomination }}
+			model.currentMission }}
     {{else}}
 	  Waiting for nomination...
     {{/if}}
   {{/if}}
   {{#if model.stateIsVote }}
       {{render "nomination_view" model.currentMission.currentNomination }}
+  {{/if}}
+  {{#if model.stateIsMission }}
+      Go on mission!
   {{/if}}
   <div style="width: 100%; clear: both;">
   </div>

@@ -10,12 +10,14 @@ Resistance.Mission = DS.Model.extend({
   }.property('isCurrent'),
 
   newNomination: function () {
-    var nom =  this.store.createRecord('nomination', {
-      mission: this
-    });
-    this.notifyPropertyChange('nominations');
+    var nom = this.get('currentNomination');
+    if (!nom || !nom.get('isNew')) {
+      var nom =  this.store.createRecord('nomination', {
+        mission: this
+      });
+    }
     return nom;
-  }.property(),
+  },
 
   currentNomination: function () {
     var noms = this.get('nominations');
@@ -28,12 +30,12 @@ Resistance.Mission = DS.Model.extend({
 
   state: function () {
     var curNom = this.get('currentNomination');
-    if (!curNom || curNom.get('isNew') ||
-        curNom.get('votes').get('length') ==
-        this.get('game').get('players').length) {
-      return 'nominate';
-    } else {
+    if (curNom && curNom.get('passed')) {
+      return 'mission';
+    } else if (curNom && !curNom.get('isNew') && curNom.get('voteOngoing')) {
       return 'vote';
+    } else {
+      return 'nominate';
     }
-  }.property('currentNomination.isNew')
+  }.property('currentNomination.isNew', 'currentNomination.passed', 'currentNomination.voteOngoing')
 });

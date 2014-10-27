@@ -1,5 +1,15 @@
 Resistance.Nomination = DS.Model.extend({
   mission: DS.belongsTo('mission'),
   players: DS.hasMany('player'),
-  votes: DS.hasMany('vote')
+  votes: DS.hasMany('vote'),
+
+  passed: function () {
+    return this.get('votes').filterBy('pass').length >
+      this.get('mission.game.players.length') / 2;
+  }.property('votes.@each.pass'),
+
+  voteOngoing: function () {
+    return this.get('votes.length') !=
+      this.get('mission.game.players.length');
+  }.property('votes.@each')
 });

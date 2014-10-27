@@ -5,7 +5,7 @@ Resistance.Game = DS.Model.extend({
 
   currentMission: function() {
     return this.get('missions').objectAt(0);
-  }.property('missions'),
+  }.property('missions.@each'),
 
   state: function() {
     return this.get('currentMission').get('state');
@@ -17,5 +17,9 @@ Resistance.Game = DS.Model.extend({
 
   stateIsVote: function () {
     return this.get('state') == 'vote';
+  }.property('state'),
+
+  stateIsMission: function () {
+    return this.get('state') == 'mission';
   }.property('state')
 });

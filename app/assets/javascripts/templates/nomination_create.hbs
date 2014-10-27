@@ -4,7 +4,7 @@
 	</div>
 	<div class="nominations-list">
 	<ul>
-	{{#each model.mission.game.players}}
+	{{#each model.game.players}}
 	  <li {{bind-attr class="nominated:active"}} {{action "select" this}}>
 		user: {{ user_id }}
 	  </li>

@@ -1,15 +1,18 @@
 Resistance.NominationCreateController = Ember.Controller.extend({
+  init: function () {
+    this._super();
+    this.set('nomination', this.get('model').newNomination());
+  },
   actions: {
     select: function (player) {
-      if (this.model.get('players').contains(player)) {
-        this.model.get('players').removeObject(player);
+      if (this.get('nomination.players').contains(player)) {
+        this.get('nomination.players').removeObject(player);
       } else {
-        this.model.get('players').addRecord(player);
+        this.get('nomination.players').addRecord(player);
       }
     },
     nominate: function () {
-      this.model.save();
-      this.model.notifyPropertyChange();
+      this.get('nomination').save();
     }
   }
 });
