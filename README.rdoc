@@ -61,14 +61,16 @@ Please feel free to use a different markup language if you do not plan to run
 * If a suggestion passes, let all participating players choose fail or success.
   - DONE: Backend: Let nominated players choose result
   - DONE: Backend: Only allow one result per nominated player
-  - Backend: Never leak the user of a result
+  - DONE: Backend: Never leak the user of a result
 
 * Advance king role after vote
   - DONE
 
 * Advance game to next mission on completed mission.
+  - DONE
 
 * After three successfull or failed missions, end the game and display result
+  - DONE
 
 * Let players make comments on and mark other players
 
@@ -79,3 +81,10 @@ Please feel free to use a different markup language if you do not plan to run
 * Current activity area above game board area
 
 * Display current king with a crown symbol
+
+* Hide success/fail buttons when result is submitted
+  - Backend: return player of a result if it is current player
+
+==== Bugs ====
+
+* Advance king when last nomination is hammered

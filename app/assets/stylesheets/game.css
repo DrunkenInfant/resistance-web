@@ -13,7 +13,18 @@
 }
 
 .missions-list li.active {
-  border-color: green;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+
+.missions-list li.succeded {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+.missions-list li.failed {
+  background-color: #d9534f;
+  border-color: #d43f3a;
 }
 
 .missions-list li > div {

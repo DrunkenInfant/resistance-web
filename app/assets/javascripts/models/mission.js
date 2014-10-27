@@ -4,10 +4,31 @@ Resistance.Mission = DS.Model.extend({
   nbr_fails_required: DS.attr(),
   index: DS.attr(),
   nominations: DS.hasMany('nomination'),
+  missionResults: DS.hasMany('missionResult'),
 
   isCurrent: function () {
-    return this.get('index') == 0;
-  }.property('isCurrent'),
+    return this.get('game.currentMission') == this;
+  }.property('game.currentMission'),
+
+  isCompleted: function () {
+    return this.get('missionResults.length') == this.get('nbr_participants');
+  }.property('missionResults.length'),
+
+  isNotCompleted: function () {
+    return !this.get('isCompleted');
+  }.property('isCompleted'),
+
+  hasSucceded: function () {
+    return this.get('isCompleted') &&
+      this.get('missionResults').filterBy('success', false).get('length') <
+        this.get('nbr_fails_required');
+  }.property('isCompleted'),
+
+  hasFailed: function () {
+    return this.get('isCompleted') &&
+      this.get('missionResults').filterBy('success', false).get('length') >=
+        this.get('nbr_fails_required');
+  }.property('isCompleted'),
 
   newNomination: function () {
     var nom = this.get('currentNomination');

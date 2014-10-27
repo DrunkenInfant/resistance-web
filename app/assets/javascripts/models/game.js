@@ -4,11 +4,20 @@ Resistance.Game = DS.Model.extend({
   king: DS.belongsTo('player'),
 
   currentMission: function() {
-    return this.get('missions').objectAt(0);
-  }.property('missions.@each'),
+    return this.get('missions').findBy('isNotCompleted');
+  }.property('missions.@each.isNotCompleted'),
+
+  isFinished: function () {
+    return this.get('missions').filterBy('hasSucceded').get('length') > 3 || 
+      this.get('missions').filterBy('hasFailed').get('length') > 3
+  }.property('missions.@each.isCompleted'),
 
   state: function() {
-    return this.get('currentMission').get('state');
+    if (this.get('isFinished')) {
+      return 'finished';
+    } else {
+      return this.get('currentMission').get('state');
+    }
   }.property('currentMission.state'),
 
   stateIsNominate: function () {
@@ -21,5 +30,9 @@ Resistance.Game = DS.Model.extend({
 
   stateIsMission: function () {
     return this.get('state') == 'mission';
+  }.property('state'),
+
+  stateIsFinished: function () {
+    return this.get('state') == 'finished';
   }.property('state')
 });

@@ -23,4 +23,8 @@ Resistance.Player = DS.Model.extend({
   hasVoted: function () {
     return this.get('vote') != undefined;
   }.property('vote'),
+
+  isElected: function () {
+    return this.get('game.currentMission.currentNomination.players').contains(this);
+  }.property('game.currentMission.currentNomination.passed')
 });

@@ -31,7 +31,10 @@
       {{render "nomination_view" model.currentMission.currentNomination }}
   {{/if}}
   {{#if model.stateIsMission }}
-      Go on mission!
+    {{render "mission_view" model.currentMission }}
+  {{/if}}
+  {{#if model.isFinished }}
+  	Game Over!
   {{/if}}
   <div style="width: 100%; clear: both;">
   </div>
@@ -40,11 +43,7 @@
 <div class="missions-area">
 	<ul class="missions-list">
 	{{#each model.missions }}
-	  {{#if isCurrent }}
-	  <li class="active" >
-	  {{else}}
-		<li>
-	  {{/if}}
+	  <li {{bind-attr class="isCurrent:active hasFailed:failed hasSucceded:succeded"}} >
 		<div>{{ nbr_participants }}</div>
 	  </li>
 	{{/each}}
