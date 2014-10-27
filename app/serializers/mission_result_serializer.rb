@@ -1,6 +1,5 @@
 class MissionResultSerializer < ActiveModel::Serializer
-  attributes :id
-  has_one :player, embed: :ids
+  attributes :id, :success
   has_one :mission, embed: :ids
 end
 

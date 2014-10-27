@@ -23,7 +23,7 @@ describe MissionResultsController do
         format: :json
       response.status.should be_eql(201)
       response.body.should have_json_path("mission_result")
-      response.body.should_not have_json_path("mission_result/success")
+      response.body.should_not have_json_path("mission_result/player")
       mro = MissionResult.all.last
       mro.player.user.should eql(@user)
       mro.success.should be_true
