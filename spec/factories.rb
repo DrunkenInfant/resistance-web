@@ -20,6 +20,7 @@ let(:user) { FactoryGirl.create(:user) }
 
   factory :player do
     sequence(:id) { |n| n }
+    sequence(:name) { |n| "Player #{n}" }
     team "resistance"
     association :user, factory: :user
     association :game, factory: :game, strategy: :build

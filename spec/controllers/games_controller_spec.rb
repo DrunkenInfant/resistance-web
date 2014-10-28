@@ -44,6 +44,14 @@ describe GamesController do
         .should eql(game.players.first.id)
     end
 
+    it "should assign default names to players" do
+      post :create, game: { user_ids: @users.map { |u| u.id } }, format: :json
+      response.status.should be_eql(201)
+      game = Game.find(parse_json(response.body)["game"]["id"])
+      (game.players.map { |p| p.name }).should eql(
+        ["Player 1", "Player 2", "Player 3", "Player 4","Player 5"])
+    end
+
   end
 
   describe "GET with :id to GamesController" do
@@ -62,7 +70,8 @@ describe GamesController do
             id: p.id,
             game_id: p.game_id,
             user_id: p.user_id,
-            team: ""
+            team: "",
+            name: p.name
           }
         },
         missions: game.missions.map { |m|
@@ -94,14 +103,16 @@ describe GamesController do
             id: p.id,
             game_id: p.game_id,
             user_id: p.user_id,
-            team: p.team
+            team: p.team,
+            name: p.name
           }
         else
           {
             id: p.id,
             game_id: p.game_id,
             user_id: p.user_id,
-            team: ""
+            team: "",
+            name: p.name
           }
         end
       }.to_json

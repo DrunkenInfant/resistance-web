@@ -46,7 +46,7 @@ orig_teams = ["spies", "spies", "resistance", "resistance", "resistance"]
     teams = orig_teams.dup
     teams.shuffle!
     g.players = User.limit(5).order('id asc').map do |u|
-      Player.create(user: u, game: g, team: teams.pop)
+      Player.create(user: u, game: g, team: teams.pop, name: "Player #{u.id}")
     end
     g.missions = [2,3,2,3,3].map.with_index do |n, i|
       Mission.create(nbr_participants: n, game: g, index: i)

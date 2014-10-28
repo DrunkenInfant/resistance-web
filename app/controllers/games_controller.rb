@@ -18,9 +18,10 @@ class GamesController < ApplicationController
   def create
     nbr_players = game_params[:user_ids].length
     members = team_assignments(nbr_players).shuffle
+    player_names = (1..nbr_players).to_a.reverse.map { |n| "Player #{n}" }
     game = Game.create do |g|
       g.players = game_params[:user_ids].map { |uid|
-        Player.new user_id: uid, game: g, team: members.pop
+        Player.new user_id: uid, game: g, team: members.pop, name: player_names.pop
       }
       g.missions = mission_specs(nbr_players).map { |ms|
         Mission.new nbr_participants: ms[:participants], nbr_fails_required: ms[:fails], game: g

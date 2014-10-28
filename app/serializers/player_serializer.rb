@@ -1,5 +1,5 @@
 class PlayerSerializer < ActiveModel::Serializer
-  attributes :id, :team
+  attributes :id, :team, :name
   has_one :game, embed: :id
   has_one :user, embed: :id
 
