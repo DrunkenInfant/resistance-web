@@ -6,7 +6,7 @@
 	<ul>
 	{{#each model.mission.game.players}}
 	  <li {{bind-attr class="nominated:active"}}>
-		user: {{ user_id }}
+		{{ name }}
 	  </li>
 	{{/each}}
 	</ul>

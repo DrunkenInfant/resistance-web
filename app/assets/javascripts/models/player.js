@@ -2,6 +2,7 @@ Resistance.Player = DS.Model.extend({
   game: DS.belongsTo('game'),
   user: DS.belongsTo('user'),
   team: DS.attr('string'),
+  name: DS.attr('string'),
 
   nominated: function () {
     return this.get('game')
