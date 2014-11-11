@@ -37,6 +37,8 @@ Please feel free to use a different markup language if you do not plan to run
   - DONE: Frontend, update game after new nomination
   - DONE: Only allow nominating correct number of players
 
+* Let all spies see who the other spies are
+
 * Let everyone vote on a suggestion.
   - DONE: Backend, only accept one vote per player
   - IGNORED: Backend, let client request voting results
@@ -62,6 +64,7 @@ Please feel free to use a different markup language if you do not plan to run
   - DONE: Backend: Let nominated players choose result
   - DONE: Backend: Only allow one result per nominated player
   - DONE: Backend: Never leak the user of a result
+  - Backend: Resistance players may only choose success
 
 * Advance king role after vote
   - DONE
@@ -84,6 +87,9 @@ Please feel free to use a different markup language if you do not plan to run
 
 * Hide success/fail buttons when result is submitted
   - Backend: return player of a result if it is current player
+  - Frontend:
+
+* Use avatars to display players
 
 ==== Bugs ====
 
