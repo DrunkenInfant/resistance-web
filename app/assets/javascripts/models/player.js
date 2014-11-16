@@ -5,10 +5,10 @@ Resistance.Player = DS.Model.extend({
   name: DS.attr('string'),
 
   nominated: function () {
-    return this.get('game')
+    var nom = this.get('game')
       .get('currentMission')
-      .get('currentNomination')
-      .get('players')
+      .get('currentNomination');
+    return nom && nom.get('players')
       .contains(this);
   }.property('game.currentMission.currentNomination.players.@each'),
 
@@ -26,6 +26,8 @@ Resistance.Player = DS.Model.extend({
   }.property('vote'),
 
   isElected: function () {
-    return this.get('game.currentMission.currentNomination.players').contains(this);
-  }.property('game.currentMission.currentNomination.passed')
+    var nom = this.get('game.currentMission.currentNomination');
+    return nom && nom.get('players').contains(this);
+  }.property('game.currentMission.currentNomination.passed'),
+
 });

@@ -1,3 +1,9 @@
+.missions-area {
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .missions-list {
   list-style-type: none;
 }
@@ -35,53 +41,90 @@
   font-size: 1.8em;
 }
 
-.player-list {
+.game-board-area .game-board-mid {
+  text-align: center;
+}
+
+.game-board-area .player-list {
   list-style-type: none;
-  margin-left: 20px;
+  padding: 0;
+}
+
+.game-board-area .player-list-left {
+  float: right
+}
+
+.game-board-area .player-list-right {
+  float: left
+}
+
+.game-board-area .player-list li {
+  display: block;
+  font-weight: bold;
+  /*margin-bottom: 10px;*/
+  padding: 5px;
+}
+
+.game-board-area .player-list li .selectable {
+  box-shadow: 0 0 0 0 #428bca;
+  border-top-right-radius: 0.5em;
+  border-top-left-radius: 0.5em;
+  pointer-events: none;
+}
+
+.game-board-area .player-list li.nominated .selectable {
+  box-shadow: 0 0 10px 5px #428bca;
+  /*border: 5px solid #428bca;*/
+}
+
+.game-board-area .player-list li.current-king .selectable {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.game-board-area .player-list li .crown {
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  background-color: #333;
+  background-image: url('/crown.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  visibility: hidden;
+}
+
+.game-board-area .player-list li.king .crown {
+  visibility: visible;
+}
+
+.game-board-area .player-list li .player-label {
+  text-align: center;
+  color: #444;
+  background-color: #DDDDDD;
+  border-top-right-radius: 0.5em;
+  border-top-left-radius: 0.5em;
+}
+
+.game-board-area .player-list li.resistance .player-label {
+  background-color: #658092;
+  color: #000;
+}
+
+.game-board-area .player-list li .player-avatar {
+  height: 120px;
+  width: 100px;
+  background-color: #000;
+  background-image: url('/anon_avatar.jpg');
+  background-size: contain;
+  background-position: center;
 }
 
 .game-title {
   width: 100%;
   margin:auto;
   text-align: center;
-}
-
-.game-active-area {
-	clear: both;
-}
-
-.game-active-header {
-	font-size: 1.4em;
-	width: 100%;
-	text-align: center;
-}
-
-.nominations-list {
-  clear: both;
-}
-
-.nominations-list ul {
-  list-style: none;
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.nominations-list ul li {
-  position: relative;
-  display: block;
-  float: left;
-  margin-right: 50px;
-  margin-bottom: 50px;
-  padding: 5px;
-  height: 80px;
-  width: 80px;
-  background-color: #b3c833;
-  color: #fff;
-}
-
-.nominations-list ul li.active {
-  background-color: #428bca;
 }
 
 .nominations-list ul li > div {
@@ -99,12 +142,19 @@
 }
 
 .vote-accepted, .vote-rejected {
+  font-weight: bold;
 }
 
 .vote-accepted:before {
-  content: "You accepted!";
+  content: "accepted";
 }
 
 .vote-rejected:before {
-  content: "You rejected!";
+  content: "rejected";
+}
+
+.mission-result-button {
+  width: 120px;
+  font-size: 1.5em;
+  font-weight: bold;
 }
