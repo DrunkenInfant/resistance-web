@@ -14,23 +14,22 @@
   margin-right: 50px;
   height: 80px;
   width: 80px;
-  border: 1px solid black;
   border-radius: 40px;
+  background-color: #DDD;
 }
 
 .missions-list li.active {
-  background-color: #5bc0de;
-  border-color: #46b8da;
+  box-shadow: 0 0 10px 3px #428bca;
 }
 
 .missions-list li.succeded {
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-image: url('/resistance-icon.jpg');
+  background-size: contain;
 }
 
 .missions-list li.failed {
-  background-color: #d9534f;
-  border-color: #d43f3a;
+  background-image: url('/spies-icon.jpg');
+  background-size: contain;
 }
 
 .missions-list li > div {
