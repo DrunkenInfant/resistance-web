@@ -10,4 +10,8 @@ class Game < ActiveRecord::Base
   def advance_king!
     self.king = players[(players.index(king) + 1) % players.length]
   end
+
+  def find_player_by_user(user)
+    players.find_by user: user
+  end
 end

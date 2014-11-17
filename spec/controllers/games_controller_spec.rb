@@ -91,32 +91,36 @@ describe GamesController do
       response.body.should be_json_eql(expected_json)
     end
 
-    it "should return game with only current_user team" do
-      game = FactoryGirl.build(:game)
-      game.players << FactoryGirl.build(:player, user: @users.first, game: game)
+    it "should only display team for current player or if current player is a spy" do
+      game = FactoryGirl.build(:game, players_count: 3)
+      game.players << FactoryGirl.build(:player, team: "spies", game: game)
+      game.players << FactoryGirl.build(:player, team: "spies", game: game)
       game.save!
-      sign_in @users.first
-      get :show, id: game.id, format: :json
-      expected_json = game.players.map { |p|
-        if p.user_id == @users.first.id
-          {
-            id: p.id,
-            game_id: p.game_id,
-            user_id: p.user_id,
-            team: p.team,
-            name: p.name
-          }
-        else
-          {
-            id: p.id,
-            game_id: p.game_id,
-            user_id: p.user_id,
-            team: "",
-            name: p.name
-          }
-        end
-      }.to_json
-      response.body.should include_json(expected_json)
+      game.players.each do |player|
+        sign_in player.user
+        get :show, id: game.id, format: :json
+        expected_json = game.players.map { |p|
+          if p.id == player.id || player.team == "spies"
+            {
+              id: p.id,
+              game_id: p.game_id,
+              user_id: p.user_id,
+              team: p.team,
+              name: p.name
+            }
+          else
+            {
+              id: p.id,
+              game_id: p.game_id,
+              user_id: p.user_id,
+              team: "",
+              name: p.name
+            }
+          end
+        }.to_json
+        response.body.should include_json(expected_json)
+        sign_out player.user
+      end
     end
 
     it "should return 404 if game not found" do
