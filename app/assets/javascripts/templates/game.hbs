@@ -3,7 +3,7 @@
 	<ul class="player-list player-list-left">
 	{{#eachEven model.players }}
 		<li {{bind-attr
-				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated"}} >
+				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
 			<div class="crown"></div>
 			<div class="selectable" {{action "select" this}}>
 				<div class="player-label">
@@ -69,7 +69,7 @@
 	<ul class="player-list player-list-right">
 	{{#eachOdd model.players }}
 		<li {{bind-attr
-				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated :resistance"}} >
+				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
 			<div class="crown"></div>
 			<div class="selectable" {{action "select" this}}>
 				<div class="player-label">

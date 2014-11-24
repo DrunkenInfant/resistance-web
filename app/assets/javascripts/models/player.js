@@ -30,4 +30,12 @@ Resistance.Player = DS.Model.extend({
     return nom && nom.get('players').contains(this);
   }.property('game.currentMission.currentNomination.passed'),
 
+  isResistance: function () {
+    return this.get('team') == 'resistance';
+  }.property('team'),
+
+  isSpy: function () {
+    return this.get('team') == 'spies';
+  }.property('team'),
+
 });

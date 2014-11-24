@@ -111,6 +111,11 @@
   color: #000;
 }
 
+.game-board-area .player-list li.spy .player-label {
+  background-color: #882C29;
+  color: #000;
+}
+
 .game-board-area .player-list li .player-avatar {
   height: 120px;
   width: 100px;
