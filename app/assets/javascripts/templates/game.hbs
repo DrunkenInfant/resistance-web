@@ -5,6 +5,8 @@
 		<li {{bind-attr
 				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
 			<div class="crown"></div>
+			{{currentPlayerIcon controller.currentPlayer.id this.id}}
+			<div style="clear: both;"></div>
 			<div class="selectable" {{action "select" this}}>
 				<div class="player-label">
 					{{ name }}
@@ -17,7 +19,6 @@
 	</ul>
 	</div>
 	<div class="game-board-mid col-lg-4">
-	<p>{{currentPlayer.name}}</p>
 	  {{#if model.stateIsNominate }}
 		{{#if currentPlayer.isKing }}
           <div class="alert alert-warning">
@@ -71,6 +72,8 @@
 		<li {{bind-attr
 				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
 			<div class="crown"></div>
+			{{currentPlayerIcon controller.currentPlayer.id this.id}}
+			<div style="clear: both;"></div>
 			<div class="selectable" {{action "select" this}}>
 				<div class="player-label">
 					{{ name }}

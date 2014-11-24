@@ -84,6 +84,7 @@
 .game-board-area .player-list li .crown {
   height: 2em;
   width: 2em;
+  float: left;
   border-radius: 1em;
   margin-bottom: 0.5em;
   background-color: #333;
@@ -114,6 +115,25 @@
 .game-board-area .player-list li.spy .player-label {
   background-color: #882C29;
   color: #000;
+}
+
+.game-board-area .player-list li .current-player-icon {
+  height: 2em;
+  width: 2em;
+  float: right;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+  background-color: #333;
+  color: #428bca;
+}
+
+.game-board-area .player-list li .current-player-icon > span {
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 1.3em;
 }
 
 .game-board-area .player-list li .player-avatar {
