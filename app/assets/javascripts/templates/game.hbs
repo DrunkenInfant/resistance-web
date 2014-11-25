@@ -35,6 +35,13 @@
 		{{/if}}
 	  {{/if}}
 	  {{#if model.stateIsVote }}
+        <div class="alert alert-info">
+          Waiting for
+          {{#each model.currentMission.currentNomination.playersNotVoted }}
+            <b>{{name}}</b>
+          {{/each}}
+          to vote...
+        </div>
 		{{#if currentPlayer.hasVoted }}
 		<div {{bind-attr class=":alert currentPlayer.vote.pass:alert-success:alert-danger"}}>
 		    You <span {{bind-attr class="currentPlayer.vote.pass:vote-accepted:vote-rejected"}}></span> the nomination!

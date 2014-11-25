@@ -18,6 +18,13 @@ Resistance.Nomination = DS.Model.extend({
       this.get('mission.nbr_participants');
   }.property('players.length'),
 
+  playersNotVoted: function () {
+    var playersVoted = this.get('votes').map(function (v) { return v.get('player'); });
+    return this.get('mission.game.players').filter(function (p) {
+      return !playersVoted.contains(p);
+    });
+  }.property('votes.@each'),
+
   index: function () {
     return this.get('mission.nominations').indexOf(this) + 1;
   }.property('index'),
