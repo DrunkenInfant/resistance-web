@@ -100,6 +100,13 @@
 	</ul>
 	<div style="width: 100%; clear: both;">
 	</div>
+	<ul class="nominations-counter">
+		<li {{bind-attr class="model.currentMission.currentNomination.isFirst:active"}}>1</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isSecond:active"}}>2</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isThird:active"}}>3</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isFourth:active"}}>4</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isFifth:active"}}>5</li>
+	</ul>
 </div>
 
 </div>

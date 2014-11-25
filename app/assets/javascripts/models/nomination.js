@@ -17,4 +17,28 @@ Resistance.Nomination = DS.Model.extend({
     return this.get('players.length') !=
       this.get('mission.nbr_participants');
   }.property('players.length'),
+
+  index: function () {
+    return this.get('mission.nominations').indexOf(this) + 1;
+  }.property('index'),
+
+  isFirst: function () {
+    return this.get('index') == 1;
+  }.property('index'),
+
+  isSecond: function () {
+    return this.get('index') == 2;
+  }.property('index'),
+
+  isThird: function () {
+    return this.get('index') == 3;
+  }.property('index'),
+
+  isFourth: function () {
+    return this.get('index') == 4;
+  }.property('index'),
+
+  isFifth: function () {
+    return this.get('index') == 5;
+  }.property('index'),
 });

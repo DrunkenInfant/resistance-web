@@ -12,6 +12,7 @@
   display: block;
   float: left;
   margin-right: 50px;
+  margin-bottom: 50px;
   height: 80px;
   width: 80px;
   border-radius: 40px;
@@ -38,6 +39,28 @@
   transform: translateY(-50%);
   text-align: center;
   font-size: 1.8em;
+}
+
+.nominations-counter {
+  list-style-type: none;
+}
+
+.nominations-counter li {
+  display: block;
+  float: left;
+  margin-right: 40px;
+  height: 50px;
+  width: 50px;
+  border-radius: 30px;
+  background-color: #DDD;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.nominations-counter li.active {
+  background-color: #30033E;
+  color: #DDD;
 }
 
 .game-board-area .game-board-mid {
