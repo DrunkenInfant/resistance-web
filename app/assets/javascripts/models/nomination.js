@@ -16,5 +16,5 @@ Resistance.Nomination = DS.Model.extend({
   incorrectNbrNominatedPlayers: function () {
     return this.get('players.length') !=
       this.get('mission.nbr_participants');
-  }.property('players.@each'),
+  }.property('players.length'),
 });

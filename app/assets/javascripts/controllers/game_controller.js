@@ -3,7 +3,7 @@ Resistance.GameController = Ember.Controller.extend({
   actions: {
     select: function (player) {
       if (this.get('model.stateIsNominate')) {
-        var nom = this.get('model.currentMission').newNomination();
+        var nom = this.get('model.currentMission.currentNomination');
         if (nom.get('players').contains(player)) {
           nom.get('players').removeObject(player);
         } else {
