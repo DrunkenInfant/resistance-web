@@ -168,6 +168,10 @@
   background-position: center;
 }
 
+.game-board-area .refresh-votes-button {
+  margin-top: 20px;
+}
+
 .game-title {
   width: 100%;
   margin:auto;

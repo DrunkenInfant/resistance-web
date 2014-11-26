@@ -41,6 +41,9 @@
             <b>{{name}}</b>
           {{/each}}
           to vote...
+          <div class="refresh-votes-button">
+            <button {{action "refresh_votes" }} class="btn btn-info">Refresh votes</button>
+          </div>
         </div>
 		{{#if currentPlayer.hasVoted }}
 		<div {{bind-attr class=":alert currentPlayer.vote.pass:alert-success:alert-danger"}}>
@@ -50,7 +53,7 @@
 		  <div class="alert alert-warning">
 			Vote on the current nomination by clicking <b>Accept</b> or <b>Reject</b>.
 		  </div>
-		  <div class="nomination-accept">
+		  <div class="alert">
 			<button {{action "vote" true}} class="btn btn-primary">Accept</button>
 			<button {{action "vote" false}} class="btn btn-primary">Reject</button>
 		  </div>

@@ -21,6 +21,9 @@ Resistance.GameController = Ember.Controller.extend({
       }).save();
       this.get('model').reload();
     },
+    refresh_votes: function () {
+      this.get('model.currentMission.currentNomination').reload();
+    },
     chooseMissionResult: function (success) {
       var ms = this.store.createRecord('missionResult', {
         mission: this.get('model.currentMission'),
