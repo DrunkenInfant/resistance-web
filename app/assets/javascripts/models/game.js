@@ -8,8 +8,8 @@ Resistance.Game = DS.Model.extend({
   }.property('missions.@each.isNotCompleted'),
 
   isFinished: function () {
-    return this.get('missions').filterBy('hasSucceded').get('length') > 3 || 
-      this.get('missions').filterBy('hasFailed').get('length') > 3
+    return this.get('missions').filterBy('hasSucceded').get('length') >= 3 || 
+      this.get('missions').filterBy('hasFailed').get('length') >= 3
   }.property('missions.@each.isCompleted'),
 
   state: function() {

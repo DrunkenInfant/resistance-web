@@ -5,9 +5,11 @@ Resistance.Player = DS.Model.extend({
   name: DS.attr('string'),
 
   nominated: function () {
-    var nom = this.get('game')
-      .get('currentMission')
-      .get('currentNomination');
+    var mission = this.get('game').get('currentMission');
+    if (!mission) {
+      return false;
+    }
+    var nom = mission.get('currentNomination');
     return nom && nom.get('players')
       .contains(this);
   }.property('game.currentMission.currentNomination.players.@each'),
