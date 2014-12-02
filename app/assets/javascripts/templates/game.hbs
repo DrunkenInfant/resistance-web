@@ -1,7 +1,7 @@
 <div class="game-board-area row">
 	<div class="col-lg-4">
 	<ul class="player-list player-list-left">
-	{{#eachEven model.players }}
+	{{#eachLeftPlayer model.players }}
 		<li {{bind-attr
 				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
 			<div class="crown"></div>
@@ -15,7 +15,7 @@
 			</div>
 			<a href="#" {{action 'dev_login' user.id}}>Log In</a>
 		</li>
-	{{/eachEven}}
+	{{/eachLeftPlayer}}
 	</ul>
 	</div>
 	<div class="game-board-mid col-lg-4">
@@ -78,7 +78,7 @@
 	</div>
 	<div class="col-lg-4">
 	<ul class="player-list player-list-right">
-	{{#eachOdd model.players }}
+	{{#eachRightPlayer model.players }}
 		<li {{bind-attr
 				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
 			<div class="crown"></div>
@@ -92,7 +92,7 @@
 			</div>
 			<a href="#" {{action 'dev_login' user.id}}>Log In</a>
 		</li>
-	{{/eachOdd}}
+	{{/eachRightPlayer}}
 	</ul>
 	</div>
 </div>
