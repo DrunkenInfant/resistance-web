@@ -20,7 +20,7 @@
 }
 
 .missions-list li.active {
-  box-shadow: 0 0 10px 3px #428bca;
+  box-shadow: 0 0 10px 3px #520275;
 }
 
 .missions-list li.succeded {
@@ -83,7 +83,6 @@
 .game-board-area .player-list li {
   display: block;
   font-weight: bold;
-  /*margin-bottom: 10px;*/
   padding: 5px;
 }
 
@@ -95,8 +94,7 @@
 }
 
 .game-board-area .player-list li.nominated .selectable {
-  box-shadow: 0 0 10px 5px #428bca;
-  /*border: 5px solid #428bca;*/
+  box-shadow: 0 0 10px 5px #520275;
 }
 
 .game-board-area .player-list li.current-king .selectable {
