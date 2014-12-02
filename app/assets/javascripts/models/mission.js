@@ -30,33 +30,34 @@ Resistance.Mission = DS.Model.extend({
         this.get('nbr_fails_required');
   }.property('isCompleted'),
 
-  newNomination: function () {
-    var nom = this.get('currentNomination');
-    if (!nom || !nom.get('isNew')) {
-      var nom =  this.store.createRecord('nomination', {
-        mission: this
-      });
-    }
-    return nom;
-  },
-
-  currentNomination: function () {
+  lastNomination: function () {
     var noms = this.get('nominations');
     var lastNom = null;
     if (noms.get('length') > 0) {
       lastNom = noms.objectAt(noms.get('length') - 1);
     }
     return lastNom;
+  }.property('nominations.length'),
+
+  currentNomination: function () {
+    var lastNom = this.get('lastNomination');
+    if (lastNom == null ||
+        (!lastNom.get('isNew') && this.get('game.stateIsNominate'))) {
+      lastNom =  this.store.createRecord('nomination', {
+        mission: this
+      });
+    }
+    return lastNom;
   }.property('nominations.@each.isNew'),
 
   state: function () {
-    var curNom = this.get('currentNomination');
-    if (curNom && curNom.get('passed')) {
+    var lastNom = this.get('lastNomination');
+    if (lastNom && lastNom.get('passed')) {
       return 'mission';
-    } else if (curNom && !curNom.get('isNew') && curNom.get('voteOngoing')) {
+    } else if (lastNom && !lastNom.get('isNew') && lastNom.get('voteOngoing')) {
       return 'vote';
     } else {
       return 'nominate';
     }
-  }.property('currentNomination.isNew', 'currentNomination.passed', 'currentNomination.voteOngoing')
+  }.property('lastNomination.isNew', 'lastNomination.passed', 'lastNomination.voteOngoing')
 });

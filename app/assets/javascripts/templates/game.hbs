@@ -1,44 +1,106 @@
-<div class="row">
-<div class="col-lg-3">
-<ul class="player-list list-group">
-  <li class="list-group-item active">
-    Players
-  </li>
-{{#each model.players }}
-  <li class="list-group-item">
-    {{ name }}
-  	{{#if isKing }}
-      <span class="glyphicon glyphicon-star"></span>
-    {{/if}}
-    <a href="#" {{action 'dev_login' user.id}}>Log In</a>
-  </li>
-{{/each}}
-</ul>
+<div class="game-board-area row">
+	<div class="col-lg-4">
+	<ul class="player-list player-list-left">
+	{{#eachLeftPlayer model.players }}
+		<li {{bind-attr
+				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
+			<div class="crown"></div>
+			{{currentPlayerIcon controller.currentPlayer.id this.id}}
+			<div style="clear: both;"></div>
+			<div class="selectable" {{action "select" this}}>
+				<div class="player-label">
+					{{ name }}
+				</div>
+				<div class="player-avatar"></div>
+			</div>
+			<a href="#" {{action 'dev_login' user.id}}>Log In</a>
+		</li>
+	{{/eachLeftPlayer}}
+	</ul>
+	</div>
+	<div class="game-board-mid col-lg-4">
+	  {{#if model.stateIsNominate }}
+		{{#if currentPlayer.isKing }}
+          <div class="alert alert-warning">
+		    Nominate <b>{{ model.currentMission.nbr_participants }}</b> players
+			by clicking on the players you want to nominate.
+		  </div>
+		  <button class="btn btn-primary"
+			  {{action "nominate"}}
+			  {{bind-attr disabled=model.currentMission.currentNomination.incorrectNbrNominatedPlayers}}>Nominate</button>
+		{{else}}
+          <div class="alert alert-info">
+			  Waiting for <b>{{ model.king.name }}</b> to nominate players.
+		  </div>
+		{{/if}}
+	  {{/if}}
+	  {{#if model.stateIsVote }}
+        <div class="alert alert-info">
+          Waiting for
+          {{#each model.currentMission.currentNomination.playersNotVoted }}
+            <b>{{name}}</b>
+          {{/each}}
+          to vote...
+          <div class="refresh-votes-button">
+            <button {{action "refresh_votes" }} class="btn btn-info">Refresh votes</button>
+          </div>
+        </div>
+		{{#if currentPlayer.hasVoted }}
+		<div {{bind-attr class=":alert currentPlayer.vote.pass:alert-success:alert-danger"}}>
+		    You <span {{bind-attr class="currentPlayer.vote.pass:vote-accepted:vote-rejected"}}></span> the nomination!
+		  </div>
+		{{else}}
+		  <div class="alert alert-warning">
+			Vote on the current nomination by clicking <b>Accept</b> or <b>Reject</b>.
+		  </div>
+		  <div class="alert">
+			<button {{action "vote" true}} class="btn btn-primary">Accept</button>
+			<button {{action "vote" false}} class="btn btn-primary">Reject</button>
+		  </div>
+		{{/if}}
+	  {{/if}}
+	  {{#if model.stateIsMission }}
+		{{#if currentPlayer.isElected }}
+		<div class="alert alert-warning">
+		  You are going on the mission! Select <b>Success</b> och <b>Fail</b> below.
+		</div>
+		<button class="mission-result-button btn btn-success" {{action "chooseMissionResult" true}}>Success</button>
+		<button class="mission-result-button btn btn-danger" {{action "chooseMissionResult" false}}>Fail</button>
+		{{else}}
+		  <div class="alert alert-info">
+            You are not part of the mission. Wait and pray for a successful result!
+		  </div>
+		{{/if}}
+	  {{/if}}
+	  {{#if model.isFinished }}
+        <div class="alert alert-info">
+          Game Over!
+        </div>
+	  {{/if}}
+	</div>
+	<div class="col-lg-4">
+	<ul class="player-list player-list-right">
+	{{#eachRightPlayer model.players }}
+		<li {{bind-attr
+				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
+			<div class="crown"></div>
+			{{currentPlayerIcon controller.currentPlayer.id this.id}}
+			<div style="clear: both;"></div>
+			<div class="selectable" {{action "select" this}}>
+				<div class="player-label">
+					{{ name }}
+				</div>
+				<div class="player-avatar"></div>
+			</div>
+			<a href="#" {{action 'dev_login' user.id}}>Log In</a>
+		</li>
+	{{/eachRightPlayer}}
+	</ul>
+	</div>
 </div>
-<div class="col-lg-9">
-<h1 class="game-title">Game: {{ model.id }}</h1>
 
-<div class="game-active-area">
-  {{#if model.stateIsNominate }}
-    {{#if currentPlayer.isKing }}
-		{{render "nomination_create"
-			model.currentMission }}
-    {{else}}
-	  Waiting for nomination...
-    {{/if}}
-  {{/if}}
-  {{#if model.stateIsVote }}
-      {{render "nomination_view" model.currentMission.currentNomination }}
-  {{/if}}
-  {{#if model.stateIsMission }}
-    {{render "mission_view" model.currentMission }}
-  {{/if}}
-  {{#if model.isFinished }}
-  	Game Over!
-  {{/if}}
-  <div style="width: 100%; clear: both;">
-  </div>
-</div>
+<div class="row">
+<div class="col-lg-12">
 
 <div class="missions-area">
 	<ul class="missions-list">
@@ -50,6 +112,14 @@
 	</ul>
 	<div style="width: 100%; clear: both;">
 	</div>
+	<ul class="nominations-counter">
+		<li {{bind-attr class="model.currentMission.currentNomination.isFirst:active"}}>1</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isSecond:active"}}>2</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isThird:active"}}>3</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isFourth:active"}}>4</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isFifth:active"}}>5</li>
+	</ul>
 </div>
+
 </div>
 </div>
