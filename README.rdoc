@@ -93,4 +93,4 @@ Please feel free to use a different markup language if you do not plan to run
 
 ==== Bugs ====
 
-* Advance king when last nomination is hammered
+* FIXED: Advance king when last nomination is hammered

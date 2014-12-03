@@ -13,6 +13,8 @@ class NominationsController < ApplicationController
         mission.game.players.each { |p|
           nomination.votes.create(player: p, pass: true)
         }
+        mission.game.advance_king!
+        mission.game.save
       end
       respond_with(nomination)
     else

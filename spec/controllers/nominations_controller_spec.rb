@@ -114,6 +114,29 @@ describe NominationsController do
       }
     end
 
+    it "should advance king on fifth nomination" do
+      mission = @game.missions.first
+      nomination_attrs = FactoryGirl.attributes_for(:nomination,
+        mission_id: @game.missions.first.id,
+        player_ids: @game
+          .players[0, @game.missions.first.nbr_participants]
+          .map { |p| p.id })
+      Mission.stub(:find).and_return(mission)
+      mission.nominations.should_receive(:build)
+        .with(hash_including(mission_id: nomination_attrs[:mission_id]))
+        .with(hash_including(player_ids: nomination_attrs[:player_ids]))
+        .and_return(FactoryGirl.build(:nomination, nomination_attrs))
+      mission.nominations.should_receive(:length).and_return(5)
+
+      mission.game.should_receive(:advance_king!)
+      mission.game.should_receive(:save)
+
+      post :create,
+        nomination: nomination_attrs,
+        format: :json
+      response.status.should be_eql(201)
+    end
+
     it "should only allow correct number of nominated players" do
       nomination = FactoryGirl.attributes_for(:nomination,
         mission_id: @game.missions.first.id,
