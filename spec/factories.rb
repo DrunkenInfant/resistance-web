@@ -23,7 +23,9 @@ let(:user) { FactoryGirl.create(:user) }
     sequence(:name) { |n| "Player #{n}" }
     team "resistance"
     association :user, factory: :user
-    association :game, factory: :game, strategy: :build
+    factory :player_with_game do
+      association :game, factory: :game, strategy: :build
+    end
   end
 
   factory :mission do
@@ -59,6 +61,7 @@ let(:user) { FactoryGirl.create(:user) }
   end
 
   factory :mission_result do
+    sequence(:id) { |n| n }
     success true
   end
 end

@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Player do
   describe "validates" do
     it "validate team" do
-      FactoryGirl.build(:player, team: "resistance").should be_valid
-      FactoryGirl.build(:player, team: "spies").should be_valid
-      FactoryGirl.build(:player, team: "").should_not be_valid
-      FactoryGirl.build(:player, team: "foo").should_not be_valid
+      FactoryGirl.build(:player_with_game, team: "resistance").should be_valid
+      FactoryGirl.build(:player_with_game, team: "spies").should be_valid
+      FactoryGirl.build(:player_with_game, team: "").should_not be_valid
+      FactoryGirl.build(:player_with_game, team: "foo").should_not be_valid
     end
 
     it "validate game" do
