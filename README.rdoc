@@ -77,6 +77,8 @@ Please feel free to use a different markup language if you do not plan to run
 
 * Let players make comments on and mark other players
 
+* Implement websockets to push updates to clients
+
 ==== UI ====
 
 * INVALID collapse player list on small screens
@@ -90,6 +92,10 @@ Please feel free to use a different markup language if you do not plan to run
   - DONE Frontend:
 
 * DONE Use avatars to display players
+
+* Add link and form to create new game
+
+* List all games
 
 ==== Bugs ====
 
