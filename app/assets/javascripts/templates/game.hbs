@@ -19,6 +19,9 @@
 	</ul>
 	</div>
 	<div class="game-board-mid col-lg-4">
+    <div class="alert">
+      <button class="btn btn-primary" {{action "refresh"}}>Refresh game</button>
+    </div>
 	  {{#if model.stateIsNominate }}
 		{{#if currentPlayer.isKing }}
           <div class="alert alert-warning">

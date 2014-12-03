@@ -1,6 +1,9 @@
 Resistance.GameController = Ember.Controller.extend({
   needs: ['application'],
   actions: {
+    refresh: function () {
+      this.get('model').reload();
+    },
     select: function (player) {
       if (this.get('model.stateIsNominate')) {
         var nom = this.get('model.currentMission.currentNomination');
