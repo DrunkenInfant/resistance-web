@@ -79,17 +79,17 @@ Please feel free to use a different markup language if you do not plan to run
 
 ==== UI ====
 
-* collapse player list on small screens
+* INVALID collapse player list on small screens
 
-* Current activity area above game board area
+* INVALID Current activity area above game board area
 
-* Display current king with a crown symbol
+* DONE Display current king with a crown symbol
 
 * Hide success/fail buttons when result is submitted
-  - Backend: return player of a result if it is current player
-  - Frontend:
+  - DONE Backend: return player of a result if it is current player
+  - DONE Frontend:
 
-* Use avatars to display players
+* DONE Use avatars to display players
 
 ==== Bugs ====
 
