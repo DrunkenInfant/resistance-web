@@ -1,9 +1,6 @@
 require 'spec_helper'
 
-describe MissionResultSerializer, type: :controller do
-
-  #include Warden::Test::Helpers
-  #Warden.test_mode!
+describe MissionResultSerializer do
 
   it "should include success" do
     mission_result = FactoryGirl.build(:mission_result)
