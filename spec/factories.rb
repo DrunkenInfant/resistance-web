@@ -57,6 +57,7 @@ let(:user) { FactoryGirl.create(:user) }
   end
 
   factory :vote do
+    sequence(:id) { |n| n }
     pass true
   end
 
