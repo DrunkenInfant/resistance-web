@@ -38,6 +38,7 @@ gem 'devise'
 group :development, :test do
   gem 'minitest'
 	gem 'rspec-rails'
+  gem 'rspec-mocks'
 	gem 'json_spec'
 	gem 'factory_girl_rails'
 	gem 'database_cleaner','1.0.1'

@@ -52,7 +52,7 @@ let(:user) { FactoryGirl.create(:user) }
   factory :nomination do
     association :mission
     after(:build) do |nom|
-      nom.players = nom.mission.game.players[0, nom.mission.nbr_participants]
+      nom.players = nom.mission.game.players[0, nom.mission.nbr_participants] if nom.mission
     end
   end
 
