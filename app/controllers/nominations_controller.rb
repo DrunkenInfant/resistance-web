@@ -16,6 +16,7 @@ class NominationsController < ApplicationController
         mission.game.advance_king!
         mission.game.save
       end
+      push_game_update(mission.game)
       respond_with(nomination)
     else
       render json: { errors: { nomination: ["Only the king may nominate"] } },

@@ -10,6 +10,14 @@ Resistance.ApplicationRoute = Ember.Route.extend({
         });
       }
     });
+
+    var socket = new WebSocketRails('localhost:3000/websocket');
+    socket.on_open = function (event) {
+    };
+    socket.bind("game.update", function (data) {
+      store.serializerFor('game').pushPayload(store, data);
+    });
+    this.set('socket', socket);
   },
   actions: {
     dev_login: function (id) {

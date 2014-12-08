@@ -12,6 +12,7 @@ class VotesController < ApplicationController
       nomination.mission.game.advance_king!
       nomination.mission.game.save
     end
+    push_game_update(nomination.mission.game)
     respond_with(vote)
   end
 

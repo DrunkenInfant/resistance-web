@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery
+//= require websocket_rails/main
 //= require handlebars
 //= require ember
 //= require ember-data

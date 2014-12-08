@@ -10,6 +10,7 @@ class MissionResultsController < ApplicationController
           game_id: mission.game.id).first
     }))
     mr.save
+    push_game_update(mission.game)
     respond_with(mr)
   end
 
