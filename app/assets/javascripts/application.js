@@ -20,4 +20,6 @@
 //= require_self
 //= require resistance
 
-Resistance = Ember.Application.create();
+Resistance = Ember.Application.create({
+  rootElement: '#container'
+});

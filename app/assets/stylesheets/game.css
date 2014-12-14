@@ -1,66 +1,108 @@
 .missions-area {
-  width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+	font-size: 1.2em;
 }
 
 .missions-list {
   list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-.missions-list li {
-  display: block;
+.missions-list > li {
   float: left;
-  margin-right: 50px;
-  margin-bottom: 50px;
-  height: 80px;
-  width: 80px;
-  border-radius: 40px;
-  background-color: #DDD;
+  width: 20%;
+  margin-bottom: 1.5em;
 }
 
-.missions-list li.active {
+.missions-list > li > div {
+  position: relative;
+  width: 100%;
+  font-size: 5em;
+}
+
+.missions-list > li > div > img {
+  display: block;
+  position: relative;
+  max-width: 1.2em;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.missions-list > li.active > div > img {
   box-shadow: 0 0 10px 3px #520275;
 }
 
-.missions-list li.succeded {
-  background-image: url('/resistance-icon.jpg');
-  background-size: contain;
-}
-
-.missions-list li.failed {
-  background-image: url('/spies-icon.jpg');
-  background-size: contain;
-}
-
-.missions-list li > div {
-  position: relative;
+.missions-list > li > div > span {
+  display: block;
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  width: 100%;
   text-align: center;
-  font-size: 1.8em;
 }
 
 .nominations-counter {
   list-style-type: none;
+  margin: 0 15px 0 0;
+  padding: 0;
 }
 
 .nominations-counter li {
   display: block;
-  float: left;
-  margin-right: 40px;
-  height: 50px;
-  width: 50px;
-  border-radius: 30px;
+  float: right;
+  padding: 5%;
+  margin-left: 5%;
+  max-width: 3em;
+  max-height: 3em;
+  height: auto;
+  width: auto;
+  border-radius: 50%;
   background-color: #DDD;
   text-align: center;
-  font-size: 1.2em;
-  font-weight: bold;
 }
 
 .nominations-counter li.active {
   background-color: #30033E;
   color: #DDD;
+}
+
+.nominations-counter li span {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.nominations-counter li.fifth span::before {
+	content: "5";
+}
+
+.nominations-counter li.fourth span::before {
+	content: "4";
+}
+
+.nominations-counter li.third span::before {
+	content: "3";
+}
+
+.nominations-counter li.second span::before {
+	content: "2";
+}
+
+.nominations-counter li.first span::before {
+	content: "1";
+}
+
+.nominations-counter li > div {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 .game-board-area .game-board-mid {
@@ -83,14 +125,20 @@
 .game-board-area .player-list li {
   display: block;
   font-weight: bold;
-  padding: 5px;
+  font-size: 1em;
+  margin-bottom: 15px;
 }
 
 .game-board-area .player-list li .selectable {
   box-shadow: 0 0 0 0 #428bca;
-  border-top-right-radius: 0.5em;
-  border-top-left-radius: 0.5em;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
   pointer-events: none;
+}
+
+.game-board-area .player-list li .selectable a {
+  pointer-events: auto;
+  color: inherit;
 }
 
 .game-board-area .player-list li.nominated .selectable {
@@ -121,11 +169,17 @@
 }
 
 .game-board-area .player-list li .player-label {
-  text-align: center;
-  color: #444;
+  height: 1.4em;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   background-color: #DDDDDD;
-  border-top-right-radius: 0.5em;
-  border-top-left-radius: 0.5em;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  padding: 0 5px;
+  color: #444;
+  font-size: 1em;
 }
 
 .game-board-area .player-list li.resistance .player-label {
@@ -139,11 +193,14 @@
 }
 
 .game-board-area .player-list li .current-player-icon {
-  height: 2em;
-  width: 2em;
-  float: right;
-  border-radius: 1em;
-  margin-bottom: 0.5em;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  float: left;
+  margin-right: 5px;
+  height: 1.3em;
+  width: 1.3em;
+  border-radius: 50%;
   background-color: #333;
   color: #428bca;
 }
@@ -151,29 +208,88 @@
 .game-board-area .player-list li .current-player-icon > span {
   display: block;
   position: relative;
-  top: 50%;
+  top: 45%;
   transform: translateY(-50%);
   text-align: center;
-  font-size: 1.3em;
+  font-size: 0.8em;
 }
 
 .game-board-area .player-list li .player-avatar {
-  height: 120px;
-  width: 100px;
-  background-color: #000;
-  background-image: url('/anon_avatar.jpg');
-  background-size: contain;
-  background-position: center;
+  max-width: 10em;
+  width: 100%;
+  border: 3px solid #000;
+  border-top: 0;
+}
+
+.game-board-area .player-list li .player-avatar-container {
+  position: relative;
+}
+
+.game-board-area .player-list li .player-avatar-container .player-avatar-crown {
+  display: block;
+  position: absolute;
+  top: 5%;
+  left: 0;
+  right: 0;
+  width: 70%;
+  margin: 0 auto;
+  visibility: hidden;
+}
+
+.game-board-area .player-list li.king .player-avatar-container .player-avatar-crown {
+  visibility: visible;
 }
 
 .game-board-area .refresh-votes-button {
   margin-top: 20px;
 }
 
-.game-title {
-  width: 100%;
-  margin:auto;
-  text-align: center;
+.vote-area {
+  margin: 15px 0;
+}
+
+.vote-area .vote-button {
+  display: inline-block;
+  position: relative;
+  width: 40%;
+  max-width: 8em;
+  padding: 0.5em 1em;
+  margin: 0 5px;
+  vertical-align: top;
+  background-color: #CCC;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.vote-area .vote-button:hover {
+  text-decoration: none;
+}
+
+.vote-area .vote-button > span {
+  position: absolute;
+  top: 0.5em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+}
+
+.vote-area .vote-button .vote-button-icon {
+  padding: 50%;
+  height: auto;
+  width: auto;
+  margin-top: 2em;
+  border-radius: 50%;
+  background-color: #444;
+}
+
+.vote-area .vote-button.vote-accept .vote-button-icon {
+  background-color: #DDD;
+}
+
+.vote-area .vote-button.vote-reject .vote-button-icon {
+  background-color: #444;
 }
 
 .nominations-list ul li > div {

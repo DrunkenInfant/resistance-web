@@ -1,24 +1,26 @@
+<div class="container-fluid">
+
 <div class="game-board-area row">
-	<div class="col-lg-4">
+	<div class="col-lg-4 col-xs-3">
 	<ul class="player-list player-list-left">
 	{{#eachLeftPlayer model.players }}
 		<li {{bind-attr
 				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
-			<div class="crown"></div>
-			{{currentPlayerIcon controller.currentPlayer.id this.id}}
-			<div style="clear: both;"></div>
 			<div class="selectable" {{action "select" this}}>
 				<div class="player-label">
-					{{ name }}
+					{{currentPlayerIcon controller.currentPlayer.id this.id}}
+					<a href="#" {{action 'dev_login' user.id}}>{{ name }}</a>
 				</div>
-				<div class="player-avatar"></div>
+				<div class="player-avatar-container">
+					<img src="/anon_avatar.jpg" class="player-avatar" />
+					<img class="player-avatar-crown" src="/avatar_crown.png" />
+				</div>
 			</div>
-			<a href="#" {{action 'dev_login' user.id}}>Log In</a>
 		</li>
 	{{/eachLeftPlayer}}
 	</ul>
 	</div>
-	<div class="game-board-mid col-lg-4">
+	<div class="game-board-mid col-lg-4 col-xs-6">
     <div class="alert">
       <button class="btn btn-primary" {{action "refresh"}}>Refresh game</button>
     </div>
@@ -56,9 +58,15 @@
 		  <div class="alert alert-warning">
 			Vote on the current nomination by clicking <b>Accept</b> or <b>Reject</b>.
 		  </div>
-		  <div class="alert">
-			<button {{action "vote" true}} class="btn btn-primary">Accept</button>
-			<button {{action "vote" false}} class="btn btn-primary">Reject</button>
+		  <div class="vote-area">
+			<div {{action "vote" true}} class="vote-button vote-accept">
+			  <span>Accept</span>
+			  <div class="vote-button-icon"></div>
+			</div>
+			<div {{action "vote" false}} class="vote-button vote-reject">
+			  <span>Reject</span>
+			  <div class="vote-button-icon"></div>
+			</div>
 		  </div>
 		{{/if}}
 	  {{/if}}
@@ -84,21 +92,21 @@
         </div>
 	  {{/if}}
 	</div>
-	<div class="col-lg-4">
+	<div class="col-lg-4 col-xs-3">
 	<ul class="player-list player-list-right">
 	{{#eachRightPlayer model.players }}
 		<li {{bind-attr
 				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
-			<div class="crown"></div>
-			{{currentPlayerIcon controller.currentPlayer.id this.id}}
-			<div style="clear: both;"></div>
 			<div class="selectable" {{action "select" this}}>
 				<div class="player-label">
-					{{ name }}
+				{{currentPlayerIcon controller.currentPlayer.id this.id}}
+					<a href="#" {{action 'dev_login' user.id}}>{{ name }}</a>
 				</div>
-				<div class="player-avatar"></div>
+				<div class="player-avatar-container">
+					<img src="/anon_avatar.jpg" class="player-avatar" />
+					<img class="player-avatar-crown" src="/avatar_crown.png" />
+				</div>
 			</div>
-			<a href="#" {{action 'dev_login' user.id}}>Log In</a>
 		</li>
 	{{/eachRightPlayer}}
 	</ul>
@@ -106,26 +114,51 @@
 </div>
 
 <div class="row">
-<div class="col-lg-12">
+<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
 
 <div class="missions-area">
 	<ul class="missions-list">
 	{{#each model.missions }}
 	  <li {{bind-attr class="isCurrent:active hasFailed:failed hasSucceded:succeded"}} >
-		<div>{{ nbr_participants }}</div>
+	  <div>
+		  {{#if hasSucceded}}
+		  <img src="/resistance-icon.jpg" />
+		  {{else}}
+			  {{#if hasFailed}}
+			  <img src="/spies-icon.jpg" />
+			  {{else}}
+			  <img src="/jittered_bg.png" />
+			  {{/if}}
+		  {{/if}}
+		  <span>{{ nbr_participants }}</span>
+	  </div>
 	  </li>
 	{{/each}}
 	</ul>
 	<div style="width: 100%; clear: both;">
 	</div>
+	<div class="col-sm-10 col-sm-offset-1 col-xs-12">
 	<ul class="nominations-counter">
-		<li {{bind-attr class="model.currentMission.currentNomination.isFirst:active"}}>1</li>
-		<li {{bind-attr class="model.currentMission.currentNomination.isSecond:active"}}>2</li>
-		<li {{bind-attr class="model.currentMission.currentNomination.isThird:active"}}>3</li>
-		<li {{bind-attr class="model.currentMission.currentNomination.isFourth:active"}}>4</li>
-		<li {{bind-attr class="model.currentMission.currentNomination.isFifth:active"}}>5</li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isFifth:active :fifth"}}>
+			<span></span>
+        </li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isFourth:active :fourth"}}>
+			<span></span>
+        </li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isThird:active :third"}}>
+			<span></span>
+        </li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isSecond:active :second"}}>
+			<span></span>
+        </li>
+		<li {{bind-attr class="model.currentMission.currentNomination.isFirst:active :first"}}>
+			<span></span>
+        </li>
 	</ul>
+    </div>
 </div>
 
 </div>
+</div>
+
 </div>
