@@ -1,0 +1,26 @@
+<div class="alert alert-info">
+  Waiting for
+  {{#each playersNotVoted }}
+    <b>{{name}}</b>
+  {{/each}}
+  to vote...
+</div>
+{{#if currentPlayer.hasVoted }}
+  <div {{bind-attr class=":alert currentPlayer.vote.pass:alert-success:alert-danger"}}>
+    You <span {{bind-attr class="currentPlayer.vote.pass:vote-accepted:vote-rejected"}}></span> the nomination!
+  </div>
+{{else}}
+  <div class="alert alert-warning">
+    Vote on the current nomination by clicking <b>Accept</b> or <b>Reject</b>.
+  </div>
+  <div class="vote-area">
+    <div {{action "vote" true}} class="vote-button vote-accept">
+      <span>Accept</span>
+      <div class="vote-button-icon"></div>
+    </div>
+    <div {{action "vote" false}} class="vote-button vote-reject">
+      <span>Reject</span>
+      <div class="vote-button-icon"></div>
+    </div>
+  </div>
+{{/if}}

@@ -42,7 +42,7 @@ Resistance.Mission = DS.Model.extend({
   currentNomination: function () {
     var lastNom = this.get('lastNomination');
     if (lastNom == null ||
-        (!lastNom.get('isNew') && this.get('game.stateIsNominate'))) {
+        (!lastNom.get('isNew') && this.get('isNominating'))) {
       lastNom =  this.store.createRecord('nomination', {
         mission: this
       });
@@ -51,13 +51,19 @@ Resistance.Mission = DS.Model.extend({
   }.property('nominations.@each.isNew'),
 
   state: function () {
+    if (this.get('isCompleted')) {
+      return 'nomination_complete';
+    }
     var lastNom = this.get('lastNomination');
     if (lastNom && lastNom.get('passed')) {
-      return 'mission';
+      return 'mission_result';
     } else if (lastNom && !lastNom.get('isNew') && lastNom.get('voteOngoing')) {
-      return 'vote';
+      return 'nomination_vote';
     } else {
-      return 'nominate';
+      return 'nomination_create';
     }
-  }.property('lastNomination.isNew', 'lastNomination.passed', 'lastNomination.voteOngoing')
+  }.property('lastNomination.isNew', 'lastNomination.passed', 'lastNomination.voteOngoing'),
+  isNominating: function () {
+    return this.get('state') == 'nomination_create';
+  }.property('state')
 });

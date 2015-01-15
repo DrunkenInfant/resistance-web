@@ -14,25 +14,25 @@ Resistance.Game = DS.Model.extend({
 
   state: function() {
     if (this.get('isFinished')) {
-      return 'finished';
+      return 'game_over';
     } else {
       return this.get('currentMission').get('state');
     }
   }.property('currentMission.state'),
 
   stateIsNominate: function () {
-    return this.get('state') == 'nominate';
+    return this.get('state') == 'nomination_create';
   }.property('state'),
 
   stateIsVote: function () {
-    return this.get('state') == 'vote';
+    return this.get('state') == 'nomination_vote';
   }.property('state'),
 
   stateIsMission: function () {
-    return this.get('state') == 'mission';
+    return this.get('state') == 'mission_result';
   }.property('state'),
 
   stateIsFinished: function () {
-    return this.get('state') == 'finished';
+    return this.get('state') == 'game_over';
   }.property('state')
 });

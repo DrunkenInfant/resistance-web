@@ -1,0 +1,14 @@
+<li {{bind-attr class="isCurrent:active"}} >
+  <div>
+    {{#if hasSucceded}}
+      <img src="/resistance-icon.jpg" />
+    {{else}}
+      {{#if hasFailed}}
+        <img src="/spies-icon.jpg" />
+      {{else}}
+        <img src="/jittered_bg.png" />
+      {{/if}}
+    {{/if}}
+    <span>{{ nbr_participants }}</span>
+  </div>
+</li>

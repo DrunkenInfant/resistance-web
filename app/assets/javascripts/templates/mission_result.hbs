@@ -1,0 +1,20 @@
+{{#if currentPlayer.shallGoOnMission }}
+<div class="alert alert-warning">
+  You are going on the mission! Select <b>Success</b> och <b>Fail</b> below.
+</div>
+<button class="mission-result-button btn btn-success"
+    {{action "chooseMissionResult" true}}>
+  Success
+</button>
+<button class="mission-result-button btn btn-danger"
+    {{action "chooseMissionResult" false}}>
+  Fail
+</button>
+{{else}}
+  <div class="alert alert-info">
+    {{#unless currentPlayer.isElected }}
+      You are not part of the mission.
+    {{/unless}}
+    Wait and pray for a successful result!
+  </div>
+{{/if}}

@@ -1,0 +1,13 @@
+<li {{bind-attr
+    class="isKing:king currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
+  <div class="selectable" {{action "select"}}>
+    <div class="player-label">
+      {{currentPlayerIcon controller.currentPlayer.id this.id}}
+      <a href="#" {{action 'dev_login' user.id}}>{{ name }}</a>
+    </div>
+    <div class="player-avatar-container">
+      <img src="/anon_avatar.jpg" class="player-avatar" />
+      <img class="player-avatar-crown" src="/avatar_crown.png" />
+    </div>
+  </div>
+</li>

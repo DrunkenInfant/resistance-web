@@ -2,163 +2,40 @@
 
 <div class="game-board-area row">
 	<div class="col-lg-4 col-xs-3">
-	<ul class="player-list player-list-left">
-	{{#eachLeftPlayer model.players }}
-		<li {{bind-attr
-				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
-			<div class="selectable" {{action "select" this}}>
-				<div class="player-label">
-					{{currentPlayerIcon controller.currentPlayer.id this.id}}
-					<a href="#" {{action 'dev_login' user.id}}>{{ name }}</a>
-				</div>
-				<div class="player-avatar-container">
-					<img src="/anon_avatar.jpg" class="player-avatar" />
-					<img class="player-avatar-crown" src="/avatar_crown.png" />
-				</div>
-			</div>
-		</li>
-	{{/eachLeftPlayer}}
-	</ul>
+    <div class="player-list-left">
+			{{render "players" leftPlayers}}
+		</div>
 	</div>
 	<div class="game-board-mid col-lg-4 col-xs-6">
     <div class="alert">
       <button class="btn btn-primary" {{action "refresh"}}>Refresh game</button>
     </div>
-	  {{#if model.stateIsNominate }}
-		{{#if currentPlayer.isKing }}
-          <div class="alert alert-warning">
-		    Nominate <b>{{ model.currentMission.nbr_participants }}</b> players
-			by clicking on the players you want to nominate.
-		  </div>
-		  <button class="btn btn-primary"
-			  {{action "nominate"}}
-			  {{bind-attr disabled=model.currentMission.currentNomination.incorrectNbrNominatedPlayers}}>Nominate</button>
-		{{else}}
-          <div class="alert alert-info">
-			  Waiting for <b>{{ model.king.name }}</b> to nominate players.
-		  </div>
-		{{/if}}
+	  {{#if stateIsNominate }}
+      {{render "nomination_create" currentMission.currentNomination }}
 	  {{/if}}
-	  {{#if model.stateIsVote }}
-        <div class="alert alert-info">
-          Waiting for
-          {{#each model.currentMission.currentNomination.playersNotVoted }}
-            <b>{{name}}</b>
-          {{/each}}
-          to vote...
-          <div class="refresh-votes-button">
-            <button {{action "refresh_votes" }} class="btn btn-info">Refresh votes</button>
-          </div>
-        </div>
-		{{#if currentPlayer.hasVoted }}
-		<div {{bind-attr class=":alert currentPlayer.vote.pass:alert-success:alert-danger"}}>
-		    You <span {{bind-attr class="currentPlayer.vote.pass:vote-accepted:vote-rejected"}}></span> the nomination!
-		  </div>
-		{{else}}
-		  <div class="alert alert-warning">
-			Vote on the current nomination by clicking <b>Accept</b> or <b>Reject</b>.
-		  </div>
-		  <div class="vote-area">
-			<div {{action "vote" true}} class="vote-button vote-accept">
-			  <span>Accept</span>
-			  <div class="vote-button-icon"></div>
-			</div>
-			<div {{action "vote" false}} class="vote-button vote-reject">
-			  <span>Reject</span>
-			  <div class="vote-button-icon"></div>
-			</div>
-		  </div>
-		{{/if}}
+	  {{#if stateIsVote }}
+      {{render "nomination_vote" currentMission.currentNomination }}
 	  {{/if}}
-	  {{#if model.stateIsMission }}
-		{{#if currentPlayer.shallGoOnMission }}
-		<div class="alert alert-warning">
-		  You are going on the mission! Select <b>Success</b> och <b>Fail</b> below.
-		</div>
-		<button class="mission-result-button btn btn-success" {{action "chooseMissionResult" true}}>Success</button>
-		<button class="mission-result-button btn btn-danger" {{action "chooseMissionResult" false}}>Fail</button>
-		{{else}}
-		  <div class="alert alert-info">
-        {{#unless currentPlayer.isElected }}
-          You are not part of the mission.
-        {{/unless}}
-        Wait and pray for a successful result!
-		  </div>
-		{{/if}}
+	  {{#if stateIsMission }}
+      {{render "mission_result" currentMission }}
 	  {{/if}}
-	  {{#if model.isFinished }}
+	  {{#if isFinished }}
         <div class="alert alert-info">
           Game Over!
         </div>
 	  {{/if}}
 	</div>
 	<div class="col-lg-4 col-xs-3">
-	<ul class="player-list player-list-right">
-	{{#eachRightPlayer model.players }}
-		<li {{bind-attr
-				class="isKing:king controller.currentPlayer.isKing:current-king nominated:nominated isResistance:resistance isSpy:spy"}} >
-			<div class="selectable" {{action "select" this}}>
-				<div class="player-label">
-				{{currentPlayerIcon controller.currentPlayer.id this.id}}
-					<a href="#" {{action 'dev_login' user.id}}>{{ name }}</a>
-				</div>
-				<div class="player-avatar-container">
-					<img src="/anon_avatar.jpg" class="player-avatar" />
-					<img class="player-avatar-crown" src="/avatar_crown.png" />
-				</div>
-			</div>
-		</li>
-	{{/eachRightPlayer}}
-	</ul>
+    <div class="player-list-right">
+			{{render "players" rightPlayers}}
+		</div>
 	</div>
 </div>
 
 <div class="row">
-<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
-
-<div class="missions-area">
-	<ul class="missions-list">
-	{{#each model.missions }}
-	  <li {{bind-attr class="isCurrent:active hasFailed:failed hasSucceded:succeded"}} >
-	  <div>
-		  {{#if hasSucceded}}
-		  <img src="/resistance-icon.jpg" />
-		  {{else}}
-			  {{#if hasFailed}}
-			  <img src="/spies-icon.jpg" />
-			  {{else}}
-			  <img src="/jittered_bg.png" />
-			  {{/if}}
-		  {{/if}}
-		  <span>{{ nbr_participants }}</span>
-	  </div>
-	  </li>
-	{{/each}}
-	</ul>
-	<div style="width: 100%; clear: both;">
-	</div>
-	<div class="col-sm-10 col-sm-offset-1 col-xs-12">
-	<ul class="nominations-counter">
-		<li {{bind-attr class="model.currentMission.currentNomination.isFifth:active :fifth"}}>
-			<span></span>
-        </li>
-		<li {{bind-attr class="model.currentMission.currentNomination.isFourth:active :fourth"}}>
-			<span></span>
-        </li>
-		<li {{bind-attr class="model.currentMission.currentNomination.isThird:active :third"}}>
-			<span></span>
-        </li>
-		<li {{bind-attr class="model.currentMission.currentNomination.isSecond:active :second"}}>
-			<span></span>
-        </li>
-		<li {{bind-attr class="model.currentMission.currentNomination.isFirst:active :first"}}>
-			<span></span>
-        </li>
-	</ul>
-    </div>
-</div>
-
-</div>
+  <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+    {{render "missions" missions}}
+  </div>
 </div>
 
 </div>

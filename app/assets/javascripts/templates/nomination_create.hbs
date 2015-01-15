@@ -1,0 +1,15 @@
+{{#if currentPlayer.isKing }}
+  <div class="alert alert-warning">
+    Nominate <b>{{ mission.nbr_participants }}</b> players
+  by clicking on the players you want to nominate.
+  </div>
+  <button class="btn btn-primary"
+    {{action "nominate"}}
+    {{bind-attr disabled=incorrectNbrNominatedPlayers}}>
+    Nominate
+  </button>
+{{else}}
+  <div class="alert alert-info">
+    Waiting for <b>{{ king.name }}</b> to nominate players.
+  </div>
+{{/if}}
