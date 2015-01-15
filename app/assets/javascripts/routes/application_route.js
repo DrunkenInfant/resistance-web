@@ -10,13 +10,18 @@ Resistance.ApplicationRoute = Ember.Route.extend({
         });
       }
     });
-
+    this.setupSocket();
+  },
+  setupSocket: function () {
+    if (this.get('socket')) {
+      this.get('socket').disconnect();
+    }
     var socket = new WebSocketRails('localhost:3000/websocket');
     socket.on_open = function (event) {
     };
     socket.bind("game.update", function (data) {
-      store.serializerFor('game').pushPayload(store, data);
-    });
+      this.store.serializerFor('game').pushPayload(this.store, data);
+    }.bind(this));
     this.set('socket', socket);
   },
   actions: {
@@ -34,6 +39,7 @@ Resistance.ApplicationRoute = Ember.Route.extend({
             }}).then(function (response) {
               session.reload().then(function () {
                 Resistance.csrfToken = session.get('csrfToken');
+                route.setupSocket();
                 if (session.get('user')) {
                   session.get('user').then(function (user) {
                     route.controllerFor('application').set('currentUser', user);
