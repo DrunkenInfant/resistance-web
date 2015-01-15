@@ -7,7 +7,6 @@ Resistance.NominationVoteController = Ember.ObjectController.extend({
         nomination: this.get('content'),
         pass: pass
       }).save();
-      this.get('controllers.game.content').reload();
     }
   }
 });

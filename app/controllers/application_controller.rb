@@ -5,4 +5,12 @@ class ApplicationController < ActionController::Base
 
   serialization_scope :current_user
 
+  def push_game_update(game)
+      game.players.each do |player|
+        WebsocketRails.users[player.user.id].send_message(:update,
+          GameSerializer.new(game, scope: player.user),
+          namespace: :game)
+      end
+  end
+
 end
