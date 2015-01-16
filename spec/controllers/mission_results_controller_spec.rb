@@ -66,5 +66,18 @@ describe MissionResultsController do
       response.status.should be_eql(422)
       response.body.should have_json_path("errors/mission")
     end
+
+    it "should not allow resistance to fail mission" do
+      mr = FactoryGirl.attributes_for(:mission_result,
+        mission_id: @game.missions.first.id,
+        success: false)
+      Mission.stub(:find).and_return(@game.missions.first)
+      @game.king.stub(:team).and_return("spies")
+      post :create,
+        mission_result: mr,
+        format: :json
+      response.status.should be_eql(422)
+      response.body.should have_json_path("errors")
+    end
   end
 end
