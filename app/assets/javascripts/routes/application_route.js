@@ -1,4 +1,11 @@
 Resistance.ApplicationRoute = Ember.Route.extend({
+  renderTemplate: function () {
+    this._super.apply(this, arguments);
+    this.render('session', {
+      outlet: 'session',
+      into: 'application'
+    });
+  },
   beforeModel: function() {
     var route = this;
     var store = this.store;

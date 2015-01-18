@@ -1,5 +1,6 @@
 Resistance.GamesShowController = Ember.ObjectController.extend({
   needs: ['application'],
+  currentUser: Ember.computed.alias('controllers.application.currentUser'),
   actions: {
     refresh: function () {
       this.get('content').reload();
@@ -15,9 +16,8 @@ Resistance.GamesShowController = Ember.ObjectController.extend({
       .slice(0, this.get('players.length')/2);
   }.property('players.@each'),
   currentPlayer: function () {
-    return this.get('players').findBy('user',
-      this.get('controllers.application.currentUser'));
-  }.property('players.@each', 'controllers.application.currentUser'),
+    return this.get('players').findBy('user', this.get('currentUser'));
+  }.property('players.@each', 'currentUser'),
   togglePlayerNominated: function (player) {
     if (this.get('stateIsNominate')) {
       var nom = this.get('currentMission.currentNomination');

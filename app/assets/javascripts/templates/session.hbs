@@ -1,0 +1,17 @@
+{{#if currentUser }}
+  <div class="session-email">{{ currentUser.email }}</div>
+  <div class="session-sign-out" {{action "signOut"}}>Sign out</div>
+{{else}}
+  <form role="form" class="sign-in-form-dropdown form" >
+    <legend>Sign in</legend>
+    <div class="form-goup">
+      <label for="email">Email</label>
+      {{input value=email classNames="form-control"}}
+    </div>
+    <div class="form-goup">
+      <label for="password">Password</label>
+      {{input type='password' value=password classNames="form-control"}}</p>
+    </div>
+    <p><button class="btn btn-primary" {{action "signIn"}}>Sign In</button></p>
+  </form>
+{{/if}}
