@@ -2,16 +2,42 @@
   <div class="session-email">{{ currentUser.email }}</div>
   <div class="session-sign-out" {{action "signOut"}}>Sign out</div>
 {{else}}
-  <form role="form" class="sign-in-form-dropdown form" >
-    <legend>Sign in</legend>
-    <div class="form-goup">
-      <label for="email">Email</label>
-      {{input value=email classNames="form-control"}}
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#signin" role="tab" data-toggle="tab">Sign in</a></li>
+    <li role="presentation"><a href="#signup" role="tab" data-toggle="tab">Register</a></li>
+  </ul>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="signin">
+      <form role="form" class="sign-in-form-dropdown form" >
+        <div class="form-goup">
+          <label for="email">Email</label>
+          {{input value=email classNames="form-control"}}
+        </div>
+        <div class="form-goup">
+          <label for="password">Password</label>
+          {{input type='password' value=password classNames="form-control"}}</p>
+        </div>
+        <button class="btn btn-primary" {{action "signIn"}}>Sign In</button>
+      </form>
     </div>
-    <div class="form-goup">
-      <label for="password">Password</label>
-      {{input type='password' value=password classNames="form-control"}}</p>
+    <div role="tabpanel" class="tab-pane" id="signup">
+      <form role="form" class="sign-in-form-dropdown form" >
+        <div class="form-goup">
+          <label for="email">Email</label>
+          {{input value=email classNames="form-control"}}
+        </div>
+        <div class="form-goup">
+          <label for="password">Password</label>
+          {{input type='password' value=password classNames="form-control"}}</p>
+        </div>
+        <div class="form-goup">
+          <label for="password_confirmation">Confirm password</label>
+          {{input type='password' value=password_confirmation classNames="form-control"}}</p>
+        </div>
+        <button class="btn btn-primary" {{action "signUp"}}>Sign Up</button>
+      </form>
     </div>
-    <p><button class="btn btn-primary" {{action "signIn"}}>Sign In</button></p>
-  </form>
+  </div>
+</div>
 {{/if}}

@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     get "/sessions/current", to: "users/sessions#current"
     delete "/sessions/current", to: "users/sessions#destroy"
 
-    post "/users/sign_up", to: "users/registrations#create"
+    post "/users", to: "users/registrations#create"
     get "/users/:id", to: "users/registrations#show"
     get "/users", to: "users/registrations#index"
   end
