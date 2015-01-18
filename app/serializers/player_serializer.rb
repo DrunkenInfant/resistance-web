@@ -4,8 +4,9 @@ class PlayerSerializer < ActiveModel::Serializer
   has_one :user, embed: :id
 
   def team
+    player = object.game.find_player_by_user(scope)
     if scope && (scope.id == object.user_id ||
-                 object.game.find_player_by_user(scope).team == "spies")
+                 (player && player.team == "spies"))
       return object.team
     else
       return ""

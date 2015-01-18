@@ -19,8 +19,10 @@ Resistance.Player = DS.Model.extend({
   }.property('game.king'),
 
   vote: function () {
-    return this.get('game.currentMission.currentNomination.votes')
-      .findBy('player', this);
+    var votes = this.get('game.currentMission.currentNomination.votes');
+    if (votes) {
+      return votes.findBy('player', this);
+    }
   }.property('game.currentMission.currentNomination.votes.@each.player'),
 
   hasVoted: function () {

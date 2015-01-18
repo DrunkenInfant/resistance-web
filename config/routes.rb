@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   devise_for :users,
     controllers: {
       sessions: 'users/sessions',
-      regitrations: 'users/registrations'
+      registrations: 'users/registrations'
     },
     skip: [:sessions, :registrations]
   devise_scope :user do
@@ -20,12 +20,14 @@ Rails.application.routes.draw do
 
     post "/users/sign_up", to: "users/registrations#create"
     get "/users/:id", to: "users/registrations#show"
+    get "/users", to: "users/registrations#index"
   end
 
   resources :games, defaults: { format: :json }, only: [:create, :show, :index]
   resources :nominations, defaults: { format: :json }, only: [:create, :show]
   resources :votes, defaults: { format: :json }, only: [:create, :show]
   resources :mission_results, defaults: { format: :json }, only: [:create, :show]
+  resources :missions, defaults: { format: :json }, only: [:show]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

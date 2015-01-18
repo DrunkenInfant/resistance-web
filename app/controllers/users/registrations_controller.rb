@@ -5,6 +5,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def sign_up(resource_name, resource)
   end
 
+  def index
+    respond_with User.all, each_serializer: UserSerializer, root: "users"
+  end
+
   def show
     user = User.find_by_id(params[:id])
     if user

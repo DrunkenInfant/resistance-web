@@ -8,6 +8,8 @@ describe GamesController do
     5.times { |n|
       @users << FactoryGirl.create(:user)
     }
+    @user = @users.first
+    sign_in @user
   end
 
   describe "POST to GamesController" do
@@ -36,6 +38,12 @@ describe GamesController do
       response.status.should be_eql(422)
     end
 
+    it "should not create new game if user not signed in" do
+      sign_out @user
+      post :create, game: { user_ids: @users.map { |u| u.id } }, format: :json
+      response.status.should be_eql(401)
+    end
+
     it "should assign king" do
       post :create, game: { user_ids: @users.map { |u| u.id } }, format: :json
       response.status.should be_eql(201)
@@ -61,6 +69,7 @@ describe GamesController do
       expected_json = {
         game: {
           id: game.id,
+          created_at: game.created_at,
           player_ids: game.players.map { |p| p.id },
           mission_ids: game.missions.map { |m| m.id },
           king_id: game.players.first.id
@@ -74,19 +83,6 @@ describe GamesController do
             name: p.name
           }
         },
-        missions: game.missions.map { |m|
-          {
-            id: m.id,
-            index: m.index,
-            game_id: m.game_id,
-            nbr_participants: m.nbr_participants,
-            nbr_fails_required: m.nbr_fails_required,
-            mission_result_ids: [],
-            nomination_ids: []
-          }
-        },
-        mission_results: [],
-        nominations: []
       }.to_json
       response.body.should be_json_eql(expected_json)
     end
@@ -131,23 +127,23 @@ describe GamesController do
     end
   end
 
-  #describe "GET to GamesController" do
-    #it "should return list of all games" do
-      #15.times do |n|
-        #game = FactoryGirl.build(:game)
-        #game.players = @users.map do |u|
-          #FactoryGirl.build(:player, game: game, user: u)
-        #end
-        #game.save!
-      #end
-      #get :index, format: :json
-      #expected_games_json = Game.all.map { |g|
-          #{
-            #id: g.id,
-            #player_ids: g.players.map { |p| p.id }
-          #}
-      #}.to_json
-      #response.body.should include_json(expected_games_json)
-    #end
-  #end
+  describe "GET to GamesController" do
+    it "should return list of all games" do
+      15.times do |n|
+        game = FactoryGirl.build(:game, players_count: 5)
+        game.save!
+      end
+      get :index, format: :json
+      expected_games_json = { games: Game.order(created_at: :desc).all.map { |g|
+          {
+            id: g.id,
+            player_ids: g.players.map { |p| p.id },
+            mission_ids: g.missions.map { |m| m.id },
+            king_id: g.players.first.id,
+            created_at: g.created_at
+          }
+      }}.to_json
+      response.body.should be_json_eql(expected_games_json).excluding(:players)
+    end
+  end
 end

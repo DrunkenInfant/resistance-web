@@ -1,4 +1,4 @@
-Resistance.GameController = Ember.ObjectController.extend({
+Resistance.GamesShowController = Ember.ObjectController.extend({
   needs: ['application'],
   actions: {
     refresh: function () {

@@ -1,7 +1,9 @@
 Resistance.Game = DS.Model.extend({
   players: DS.hasMany('player'),
-  missions: DS.hasMany('mission'),
+  missions: DS.hasMany('mission', { async: true }),
   king: DS.belongsTo('player'),
+  users: DS.hasMany('user'),
+  created_at: DS.attr(),
 
   currentMission: function() {
     return this.get('missions').findBy('isNotCompleted');
@@ -15,8 +17,10 @@ Resistance.Game = DS.Model.extend({
   state: function() {
     if (this.get('isFinished')) {
       return 'game_over';
-    } else {
+    } else if (this.get('currentMission')) {
       return this.get('currentMission').get('state');
+    } else {
+      return '';
     }
   }.property('currentMission.state'),
 

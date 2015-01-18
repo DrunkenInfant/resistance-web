@@ -1,0 +1,19 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <span class="panel-title">All Games</span>
+  </div>
+  <div class="panel-body">
+    <div class="list-group">
+      {{#link-to 'games.new' classNames="list-group-item"}}
+        <span class="glyphicon glyphicon-plus"></span> New Game
+      {{/link-to}}
+      {{#each}}
+        {{#link-to 'games.show' this classNames="list-group-item"}}
+          {{#each players}}
+            <span>{{name}}</span>
+          {{/each}}
+        {{/link-to}}
+      {{/each}}
+    </div>
+  </div>
+</div>

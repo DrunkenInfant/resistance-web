@@ -1,9 +1,10 @@
 class GamesController < ApplicationController
 
+  before_action :authenticate_user!, only: [:create]
   respond_to :json
 
   def index
-    respond_with(Game.all)
+    respond_with Game.order(created_at: :desc).all
   end
 
   def show

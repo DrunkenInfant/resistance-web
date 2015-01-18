@@ -43,7 +43,7 @@ Resistance.ApplicationRoute = Ember.Route.extend({
                 if (session.get('user')) {
                   session.get('user').then(function (user) {
                     route.controllerFor('application').set('currentUser', user);
-                    route.controllerFor('game').get('model').reload();
+                    route.controllerFor('games_show').get('model').reload();
                   });
                 }
               });

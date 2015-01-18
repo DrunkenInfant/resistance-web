@@ -8,9 +8,9 @@ describe Users::RegistrationsController do
       user = FactoryGirl.attributes_for(:user)
       @request.env["devise.mapping"] = Devise.mappings[:user]
       post :create, user: user, format: :json
-      response.body.should have_json_path("email")
-      response.body.should have_json_path("id")
-      parse_json(response.body)["email"].should be_eql(user[:email])
+      response.body.should have_json_path("user/email")
+      response.body.should have_json_path("user/id")
+      parse_json(response.body)["user"]["email"].should be_eql(user[:email])
       response.status.should eql(201)
       subject.current_user.should be_nil
     end
