@@ -20,16 +20,7 @@ Resistance.ApplicationRoute = Ember.Route.extend({
     this.setupSocket();
   },
   setupSocket: function () {
-    if (this.get('socket')) {
-      this.get('socket').disconnect();
-    }
-    var socket = new WebSocketRails('localhost:3000/websocket');
-    socket.on_open = function (event) {
-    };
-    socket.bind("game.update", function (data) {
-      this.store.serializerFor('game').pushPayload(this.store, data);
-    }.bind(this));
-    this.set('socket', socket);
+    this.controllerFor('socket').setupSocket();
   },
   actions: {
     dev_login: function (id) {

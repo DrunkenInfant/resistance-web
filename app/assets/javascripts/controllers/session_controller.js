@@ -1,5 +1,5 @@
 Resistance.SessionController = Ember.Controller.extend({
-  needs: ['application'],
+  needs: ['application', 'socket'],
   currentUser: Ember.computed.alias('controllers.application.currentUser'),
   actions: {
     signIn: function () {
@@ -14,6 +14,7 @@ Resistance.SessionController = Ember.Controller.extend({
           this.store.find('session', 'current').then(function (session) {
             session.reload().then(function () {
               Resistance.csrfToken = session.get('csrfToken');
+              this.get('controllers.socket').setupSocket();
               session.get('user').then(function (user) {
                 this.get('controllers.application').set('currentUser', user);
               }.bind(this));
@@ -28,6 +29,7 @@ Resistance.SessionController = Ember.Controller.extend({
             session.reload().then(function () {
               Resistance.csrfToken = session.get('csrfToken');
               this.get('controllers.application').set('currentUser', null);
+              this.get('controllers.socket').setupSocket();
             }.bind(this));
           }.bind(this));
         }.bind(this));
